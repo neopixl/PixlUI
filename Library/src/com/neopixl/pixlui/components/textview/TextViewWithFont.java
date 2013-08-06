@@ -8,51 +8,58 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 
 /**
- * TextView with custom font
+ * TextView with custom font by XML or Code
+ * This class provided too a font factory
  * @author odemolliens
  *
  */
 public class TextViewWithFont extends EllipsizingTextView {
-	
+
 	private static String TEXTVIEW_ATTRIBUTE_FONT_NAME = "typeface";
-	
-    public TextViewWithFont(Context context) {
-        super(context);
-    }
 
-    public TextViewWithFont(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        setCustomFont(context, attrs);
-    }
+	public TextViewWithFont(Context context) {
+		super(context);
+	}
 
-    public TextViewWithFont(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        setCustomFont(context, attrs);
-    }
+	public TextViewWithFont(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		setCustomFont(context, attrs);
+	}
 
-    private void setCustomFont(Context ctx, AttributeSet attrs) {
+	public TextViewWithFont(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs, defStyle);
+		setCustomFont(context, attrs);
+	}
 
-    	String typefaceName = attrs.getAttributeValue(PixlUIContants.SCHEMA_URL, TEXTVIEW_ATTRIBUTE_FONT_NAME);
+	private void setCustomFont(Context ctx, AttributeSet attrs) {
 
-    	if(typefaceName!=null){
-    		setPaintFlags(this.getPaintFlags() | Paint.SUBPIXEL_TEXT_FLAG | Paint.LINEAR_TEXT_FLAG);
-            setCustomFont(ctx, typefaceName);
-    	}
-    }
+		String typefaceName = attrs.getAttributeValue(PixlUIContants.SCHEMA_URL, TEXTVIEW_ATTRIBUTE_FONT_NAME);
 
-    public boolean setCustomFont(Context ctx, String font) {
-        Typeface tf = FontFactory.getInstance(ctx).getFont(font);
-        if(tf != null){
-        	setTypeface(tf);  
-        	return true;
-        }else{
-        	return false;
-        }
-    }
+		if(typefaceName!=null){
+			setPaintFlags(this.getPaintFlags() | Paint.SUBPIXEL_TEXT_FLAG | Paint.LINEAR_TEXT_FLAG);
+			setCustomFont(ctx, typefaceName);
+		}
+	}
+
+	/**
+	 * Use this method to set a custom font in your code (/assets/fonts/)
+	 * @param ctx
+	 * @param Font Name, don't forget to add file extension
+	 * @return
+	 */
+	public boolean setCustomFont(Context ctx, String font) {
+		Typeface tf = FontFactory.getInstance(ctx).getFont(font);
+		if(tf != null){
+			setTypeface(tf);  
+			return true;
+		}else{
+			return false;
+		}
+	}
 
 	@Override
 	protected void onSizeChanged (int w, int h, int oldw, int oldh) {
-	    super.onSizeChanged(w, h, oldw, oldh);
+		super.onSizeChanged(w, h, oldw, oldh);
 	}
 
 }

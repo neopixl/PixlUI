@@ -6,6 +6,11 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.util.Log;
 
+/**
+ * Manage font
+ * @author odemolliens
+ *
+ */
 public class FontFactory {
 	private static FontFactory instance;
 	private HashMap<String, Typeface> fontMap = new HashMap<String, Typeface>();
