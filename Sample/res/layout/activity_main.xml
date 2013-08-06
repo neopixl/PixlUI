@@ -9,10 +9,32 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <com.neopixl.pixlui.components.textview.TextViewWithFont
+    <com.neopixl.pixlui.components.textview.TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        pixlui:typeface="GearedSlab.ttf"
-        android:text="@string/hello_world" />
+        android:text="@string/hello_world"
+        pixlui:typeface="GearedSlab.ttf" />
+
+    <com.neopixl.pixlui.components.edittext.EditText
+        android:id="@+id/editText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="14dp"
+        android:ems="10"
+        android:text="@string/hello_world"
+        pixlui:typeface="Oswald_Regular.ttf" />
+
+    <com.neopixl.pixlui.components.button.Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editText1"
+        android:layout_below="@+id/editText1"
+        android:layout_marginTop="38dp"
+        android:text="@string/hello_world"
+        pixlui:typeface="Oswald_Regular.ttf" />
 
 </RelativeLayout>
