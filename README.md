@@ -10,6 +10,22 @@ Screenshot
 How use it ?
 ==========
 
+1 .  Import [pixlui.jar](https://github.com/neopixl/PixlUI/raw/master/Sample/libs/pixlui.jar "pixlui.jar") in your project.
+
+2 . Use it in XML:
+
+```xml
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:pixlui="http://schemas.android.com/apk/com.neopixl.pixlui"
+    xmlns:tools="http://schemas.android.com/tools" >
+
+    <com.neopixl.pixlui.components.textview.TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_world"
+        pixlui:typeface="GearedSlab.ttf" />
+```
 
 
 Copyright
