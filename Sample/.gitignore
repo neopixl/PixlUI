@@ -1,0 +1,13 @@
+bin/
+.metadata/
+.settings
+gen/
+PushPixl/target/classes/com/neopixl/pushpixl/core/NPNotification.class
+PushPixl/target/classes/com/neopixl/pushpixl/core/NPNotificationManager.class
+PushPixl/target/classes/com/neopixl/pushpixl/core/NPQuietTime.class
+PushPixl/target/classes/com/neopixl/pushpixl/core/NPRestPixlConf.class
+PushPixl/target/classes/com/neopixl/pushpixl/core/NPURLBuilder.class
+PushPixl/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+RestPixl/target/RestPixl-0.0.1-SNAPSHOT.jar
+PixlLogger-1.0.0-SNAPSHOT.jar
+target/
