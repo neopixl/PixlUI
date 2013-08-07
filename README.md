@@ -12,7 +12,9 @@ How use it ?
 
 1 . Import [pixlui.jar](https://github.com/neopixl/PixlUI/raw/master/Sample/libs/pixlui.jar "pixlui.jar") in your project.
 
-2 . Use it in XML:
+2. Add your custom fonts in /assets/fonts/
+
+3 . Use it in XML:
 
 ```xml
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
