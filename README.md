@@ -10,7 +10,7 @@ Screenshot
 How use it ?
 ==========
 
-1 .  Import [pixlui.jar](https://github.com/neopixl/PixlUI/raw/master/Sample/libs/pixlui.jar "pixlui.jar") in your project.
+1 . Import [pixlui.jar](https://github.com/neopixl/PixlUI/raw/master/Sample/libs/pixlui.jar "pixlui.jar") in your project.
 
 2 . Use it in XML:
 
@@ -25,6 +25,7 @@ How use it ?
         android:layout_height="wrap_content"
         android:text="@string/hello_world"
         pixlui:typeface="GearedSlab.ttf" />
+</RelativeLayout>
 ```
 
 
