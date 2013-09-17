@@ -17,13 +17,13 @@ public class FontFactory {
 	private Context context;
 
 	private FontFactory(Context context) {
-		this.context = context;
+		this.context = context.getApplicationContext();
 	}
 
 	public static FontFactory getInstance(Context context) {
-		if(instance==null){
+		if(instance == null){
 			return instance = new FontFactory(context);
-		}else{
+		} else {
 			return instance;
 		}
 	}
@@ -35,7 +35,7 @@ public class FontFactory {
 				typeface = Typeface.createFromAsset(context.getResources().getAssets(), "fonts/" + font);
 				fontMap.put(font, typeface);  
 			} catch (Exception e) {
-				Log.e("FontFactory", "Could not get typeface: "+e.getMessage() +" with name: "+font);
+				Log.e("FontFactory", "Could not get typeface: " + e.getMessage() + " with name: " + font);
 				return null;
 			}
 

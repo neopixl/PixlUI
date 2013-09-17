@@ -5,34 +5,32 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 
+import com.neopixl.pixlui.R;
 import com.neopixl.pixlui.components.textview.FontFactory;
+import com.neopixl.pixlui.intern.FontStyleView;
 import com.neopixl.pixlui.intern.PixlUIConstants;
+import com.neopixl.pixlui.intern.PixlUIUtils;
 
-public class Button extends android.widget.Button {
-
-	private static String BUTTON_ATTRIBUTE_FONT_NAME = "typeface";
+public class Button extends android.widget.Button implements FontStyleView {
 
 	public Button(Context context) {
-		super(context);
+		this(context, null);
 	}
 
 	public Button(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		setCustomFont(context, attrs);
+		this(context, attrs, 0);
 	}
 
 	public Button(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		setCustomFont(context, attrs);
+        setCustomFont(context, attrs, defStyle);
 	}
 
-	private void setCustomFont(Context ctx, AttributeSet attrs) {
-		String typefaceName = attrs.getAttributeValue(PixlUIConstants.SCHEMA_URL, BUTTON_ATTRIBUTE_FONT_NAME);
-
-		if(typefaceName!=null){
-			setPaintFlags(this.getPaintFlags() | Paint.SUBPIXEL_TEXT_FLAG | Paint.LINEAR_TEXT_FLAG);
-			setCustomFont(ctx, typefaceName);
-		}
+	private void setCustomFont(Context ctx, AttributeSet attrs, int defStyle) {
+        PixlUIUtils.setCustomFont(ctx, this,
+                R.styleable.com_neopixl_pixlui_components_button_Button,
+                R.styleable.com_neopixl_pixlui_components_button_Button_typeface,
+                attrs, defStyle);
 	}
 
 	/**
@@ -43,10 +41,10 @@ public class Button extends android.widget.Button {
 	 */
 	public boolean setCustomFont(Context ctx, String font) {
 		Typeface tf = FontFactory.getInstance(ctx).getFont(font);
-		if(tf != null){
+		if(tf != null) {
 			setTypeface(tf);  
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
