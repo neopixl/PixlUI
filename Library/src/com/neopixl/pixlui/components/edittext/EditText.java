@@ -6,7 +6,7 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 
 import com.neopixl.pixlui.components.textview.FontFactory;
-import com.neopixl.pixlui.intern.PixlUIContants;
+import com.neopixl.pixlui.intern.PixlUIConstants;
 
 public class EditText extends android.widget.EditText {
 
@@ -27,7 +27,7 @@ public class EditText extends android.widget.EditText {
 	}
 
 	private void setCustomFont(Context ctx, AttributeSet attrs) {
-		String typefaceName = attrs.getAttributeValue(PixlUIContants.SCHEMA_URL, EDITTEXT_ATTRIBUTE_FONT_NAME);
+		String typefaceName = attrs.getAttributeValue(PixlUIConstants.SCHEMA_URL, EDITTEXT_ATTRIBUTE_FONT_NAME);
 
 		if(typefaceName!=null){
 			setPaintFlags(this.getPaintFlags() | Paint.SUBPIXEL_TEXT_FLAG | Paint.LINEAR_TEXT_FLAG);

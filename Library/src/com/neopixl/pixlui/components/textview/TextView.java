@@ -1,6 +1,8 @@
 package com.neopixl.pixlui.components.textview;
 
-import com.neopixl.pixlui.intern.PixlUIContants;
+import android.content.res.TypedArray;
+import android.util.Log;
+import com.neopixl.pixlui.R;
 
 import android.content.Context;
 import android.graphics.Paint;
@@ -15,29 +17,29 @@ import android.util.AttributeSet;
  */
 public class TextView extends EllipsizingTextView {
 
-	private static String TEXTVIEW_ATTRIBUTE_FONT_NAME = "typeface";
-
 	public TextView(Context context) {
-		super(context);
+		this(context, null);
+    }
+
+    public TextView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public TextView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+		setCustomFont(context, attrs, defStyle);
 	}
 
-	public TextView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		setCustomFont(context, attrs);
-	}
+    private void setCustomFont(Context ctx, AttributeSet attrs, int defStyle) {
 
-	public TextView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-		setCustomFont(context, attrs);
-	}
+        // Retrieve style attributes.
+        TypedArray a = ctx.obtainStyledAttributes(attrs, R.styleable.com_neopixl_pixlui_components_textview_TextView, defStyle, 0);
+        String typefaceName = a.getString(R.styleable.com_neopixl_pixlui_components_textview_TextView_typeface);
+        a.recycle();
 
-	private void setCustomFont(Context ctx, AttributeSet attrs) {
-
-		String typefaceName = attrs.getAttributeValue(PixlUIContants.SCHEMA_URL, TEXTVIEW_ATTRIBUTE_FONT_NAME);
-
-		if(typefaceName!=null){
-			setPaintFlags(this.getPaintFlags() | Paint.SUBPIXEL_TEXT_FLAG | Paint.LINEAR_TEXT_FLAG);
-			setCustomFont(ctx, typefaceName);
+        if(typefaceName != null) {
+            setPaintFlags(this.getPaintFlags() | Paint.SUBPIXEL_TEXT_FLAG | Paint.LINEAR_TEXT_FLAG);
+            setCustomFont(ctx, typefaceName);
 		}
 	}
 
@@ -49,10 +51,10 @@ public class TextView extends EllipsizingTextView {
 	 */
 	public boolean setCustomFont(Context ctx, String font) {
 		Typeface tf = FontFactory.getInstance(ctx).getFont(font);
-		if(tf != null){
+		if(tf != null) {
 			setTypeface(tf);  
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
@@ -61,5 +63,4 @@ public class TextView extends EllipsizingTextView {
 	protected void onSizeChanged (int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
 	}
-
 }
