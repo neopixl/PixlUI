@@ -5,34 +5,32 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 
+import com.neopixl.pixlui.R;
 import com.neopixl.pixlui.components.textview.FontFactory;
-import com.neopixl.pixlui.intern.PixlUIContants;
+import com.neopixl.pixlui.intern.FontStyleView;
+import com.neopixl.pixlui.intern.PixlUIConstants;
+import com.neopixl.pixlui.intern.PixlUIUtils;
 
-public class EditText extends android.widget.EditText {
-
-	private static String EDITTEXT_ATTRIBUTE_FONT_NAME = "typeface";
+public class EditText extends android.widget.EditText implements FontStyleView {
 
 	public EditText(Context context) {
-		super(context);
+		this(context, null);
 	}
 
 	public EditText(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		setCustomFont(context, attrs);
+		this(context, attrs, 0);
 	}
 
 	public EditText(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		setCustomFont(context, attrs);
+		setCustomFont(context, attrs, defStyle);
 	}
 
-	private void setCustomFont(Context ctx, AttributeSet attrs) {
-		String typefaceName = attrs.getAttributeValue(PixlUIContants.SCHEMA_URL, EDITTEXT_ATTRIBUTE_FONT_NAME);
-
-		if(typefaceName!=null){
-			setPaintFlags(this.getPaintFlags() | Paint.SUBPIXEL_TEXT_FLAG | Paint.LINEAR_TEXT_FLAG);
-			setCustomFont(ctx, typefaceName);
-		}
+	private void setCustomFont(Context ctx, AttributeSet attrs, int defStyle) {
+        PixlUIUtils.setCustomFont(ctx, this,
+                R.styleable.com_neopixl_pixlui_components_edittext_EditText,
+                R.styleable.com_neopixl_pixlui_components_edittext_EditText_typeface,
+                attrs, defStyle);
 	}
 
 	/**
@@ -43,10 +41,10 @@ public class EditText extends android.widget.EditText {
 	 */
 	public boolean setCustomFont(Context ctx, String font) {
 		Typeface tf = FontFactory.getInstance(ctx).getFont(font);
-		if(tf != null){
+		if(tf != null) {
 			setTypeface(tf);  
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
