@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.ActionMode;
 import android.view.ActionMode.Callback;
@@ -11,7 +12,9 @@ import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.neopixl.pixlui.components.textview.FontFactory;
 import com.neopixl.pixlui.intern.PixlUIContants;
@@ -143,6 +146,27 @@ public class EditText extends android.widget.EditText {
 				clipboard.setPrimaryClip(clip);
 			}
 		}
-
+	}
+	
+	/**
+	 * Force show keyboard
+	 */
+	public void showKeyboard() {
+		InputMethodManager mgr = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+		mgr.showSoftInput(this, InputMethodManager.SHOW_FORCED);
+		this.requestFocus();
+		//Trick used to create a fake touch event on the editText
+		MotionEvent event = MotionEvent.obtain(0, SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, this.getMeasuredWidth(), 0, 0);
+		this.onTouchEvent(event);
+		event.recycle();
+	}
+	
+	/**
+	 * Force hide keyboard
+	 */
+	public void hideKeyboard() {
+		InputMethodManager mgr = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+		mgr.hideSoftInputFromWindow(this.getWindowToken(), 0);
+		this.clearFocus();
 	}
 }
