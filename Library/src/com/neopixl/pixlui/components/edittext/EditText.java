@@ -55,7 +55,7 @@ public class EditText extends android.widget.EditText {
 		boolean disableCopyAndPaste = attrs.getAttributeBooleanValue(
 				PixlUIContants.SCHEMA_URL, EDITTEXT_ATTRIBUTE_COPY_AND_PASTE, true);
 
-		if(!disableCopyAndPaste){
+		if(!disableCopyAndPaste && !isInEditMode()){
 			disableCopyAndPaste();
 		}
 	}
@@ -64,7 +64,7 @@ public class EditText extends android.widget.EditText {
 		boolean cancelClipboard = attrs.getAttributeBooleanValue(
 				PixlUIContants.SCHEMA_URL, EDITTEXT_ATTRIBUTE_CANCEL_CLIPBOARD_CONTENT, false);
 
-		if(cancelClipboard){
+		if(cancelClipboard && !isInEditMode()){
 			cancelClipBoardContent();
 		}
 	}
