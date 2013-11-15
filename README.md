@@ -26,6 +26,8 @@ How use it ?
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/hello_world"
+        pixlui:copyandpaste="false"
+        pixlui:clearclipboardcontent="true"
         pixlui:typeface="GearedSlab.ttf" />
 </RelativeLayout>
 ```
