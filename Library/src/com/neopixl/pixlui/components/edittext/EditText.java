@@ -19,6 +19,8 @@ import com.neopixl.pixlui.intern.PixlUIContants;
 public class EditText extends android.widget.EditText {
 
 	private static String EDITTEXT_ATTRIBUTE_FONT_NAME = "typeface";
+	private static String EDITTEXT_ATTRIBUTE_COPY_AND_PASTE = "copyandpaste";
+	private static String EDITTEXT_ATTRIBUTE_CANCEL_CLIPBOARD_CONTENT = "clearclipboardcontent";
 
 	public EditText(Context context) {
 		super(context);
@@ -27,11 +29,15 @@ public class EditText extends android.widget.EditText {
 	public EditText(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		setCustomFont(context, attrs);
+		setDisableCopyAndPaste(context,attrs);
+		setCancelClipboard(context,attrs);
 	}
 
 	public EditText(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		setCustomFont(context, attrs);
+		setDisableCopyAndPaste(context,attrs);
+		setCancelClipboard(context,attrs);
 	}
 
 	private void setCustomFont(Context ctx, AttributeSet attrs) {
@@ -45,9 +51,27 @@ public class EditText extends android.widget.EditText {
 		}
 	}
 
+	private void setDisableCopyAndPaste(Context ctx, AttributeSet attrs) {
+		boolean disableCopyAndPaste = attrs.getAttributeBooleanValue(
+				PixlUIContants.SCHEMA_URL, EDITTEXT_ATTRIBUTE_COPY_AND_PASTE, true);
+
+		if(!disableCopyAndPaste){
+			disableCopyAndPaste();
+		}
+	}
+
+	private void setCancelClipboard(Context ctx, AttributeSet attrs) {
+		boolean cancelClipboard = attrs.getAttributeBooleanValue(
+				PixlUIContants.SCHEMA_URL, EDITTEXT_ATTRIBUTE_CANCEL_CLIPBOARD_CONTENT, false);
+
+		if(cancelClipboard){
+			cancelClipBoardContent();
+		}
+	}
+
 	/**
 	 * Use this method to set a custom font in your code (/assets/fonts/)
-	 * 
+	 *  a
 	 * @param ctx
 	 * @param Font
 	 *            Name, don't forget to add file extension
@@ -70,13 +94,11 @@ public class EditText extends android.widget.EditText {
 	public void disableCopyAndPaste() {
 		if (android.os.Build.VERSION.SDK_INT < 11) {
 			this.setOnCreateContextMenuListener(new OnCreateContextMenuListener() {
-
-	            public void onCreateContextMenu(ContextMenu menu, View v,
-	                    ContextMenuInfo menuInfo) {
-	                menu.clear();
-
-	            }
-	        });
+				public void onCreateContextMenu(ContextMenu menu, View v,
+						ContextMenuInfo menuInfo) {
+					menu.clear();
+				}
+			});
 		}else{
 			this.setCustomSelectionActionModeCallback(new Callback() {
 
@@ -96,7 +118,6 @@ public class EditText extends android.widget.EditText {
 				}
 			});
 		}
-
 	}
 
 	@SuppressWarnings("deprecation")
@@ -104,7 +125,7 @@ public class EditText extends android.widget.EditText {
 	/*
 	 * Cancel clipboard content
 	 */
-	public void cancelClipBoard() {
+	public void cancelClipBoardContent() {
 
 		if (android.os.Build.VERSION.SDK_INT < 11) {
 			android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getContext()
@@ -124,5 +145,4 @@ public class EditText extends android.widget.EditText {
 		}
 
 	}
-
 }

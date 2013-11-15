@@ -25,6 +25,8 @@
         android:layout_marginTop="14dp"
         android:ems="10"
         android:text="@string/hello_world"
+         pixlui:copyandpaste="false"
+        pixlui:clearclipboardcontent="true"
         pixlui:typeface="Oswald_Regular.ttf" />
 
     <com.neopixl.pixlui.components.button.Button
