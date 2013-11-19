@@ -28,6 +28,7 @@ How use it ?
         android:text="@string/hello_world"
         pixlui:copyandpaste="false"
         pixlui:clearclipboardcontent="true"
+        pixlui:letterspacing="10.0"
         pixlui:typeface="GearedSlab.ttf" />
 </RelativeLayout>
 ```
