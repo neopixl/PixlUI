@@ -1,6 +1,7 @@
 ![Logo](https://raw.github.com/neopixl/PixlUI/master/Sample/res/drawable-xhdpi/small.png ) PixlUI
 ======
 
+Provide few methods for Button/TextView/EditText.
 
 Screenshot
 ==========
