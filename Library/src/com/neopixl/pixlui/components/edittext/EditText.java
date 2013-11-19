@@ -192,6 +192,14 @@ public class EditText extends android.widget.EditText {
 	public float getLetterSpacing() {
 		return letterSpacing;
 	}
+	
+	/**
+	 * Can be usefull with letter spacing
+	 * @return
+	 */
+	public String getOriginalText() {
+		return originalText.toString();
+	}
 
 	/**
 	 * Applying letter spacing (by default = 0)
