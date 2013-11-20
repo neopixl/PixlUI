@@ -15,8 +15,8 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 public class EllipsizingTextView extends TextView {
-	private static final String ELLIPSIS = "É";
-	private static final Pattern DEFAULT_END_PUNCTUATION = Pattern.compile("[\\.,É;\\:\\s]*$", Pattern.DOTALL);
+	private static final String ELLIPSIS = "\u2026";
+	private static final Pattern DEFAULT_END_PUNCTUATION = Pattern.compile("[\\.,\u2026;:\\s]*$", Pattern.DOTALL);
 
 	public interface EllipsizeListener {
 		void ellipsizeStateChanged(boolean ellipsized);
