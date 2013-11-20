@@ -5,18 +5,19 @@ import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.SystemClock;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ScaleXSpan;
 import android.util.AttributeSet;
 import android.view.ActionMode;
 import android.view.ActionMode.Callback;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
+import android.view.inputmethod.InputConnectionWrapper;
 import android.view.inputmethod.InputMethodManager;
 
 import com.neopixl.pixlui.components.textview.FontFactory;
@@ -24,16 +25,23 @@ import com.neopixl.pixlui.intern.PixlUIContants;
 
 public class EditText extends android.widget.EditText {
 
+	public interface EditTextBatchListener
+	{
+		public void addNewChar(EditText edittext);
+		public void deleteKeyboardButton(EditText edittext, boolean emptyText);
+	}
+
 	private static String EDITTEXT_ATTRIBUTE_FONT_NAME = "typeface";
 	private static String EDITTEXT_ATTRIBUTE_COPY_AND_PASTE = "copyandpaste";
 	private static String EDITTEXT_ATTRIBUTE_CANCEL_CLIPBOARD_CONTENT = "clearclipboardcontent";
-	private static String EDITTEXT_ATTRIBUTE_LETTER_SPACING = "letterspacing";
 
+	private EditTextBatchListener listener;
 
-	/**** Letter spacing ****/
-	private float letterSpacing = PixlUIContants.LetterSpacing.NORMAL;
-	private CharSequence originalText = "";
-	private boolean useLetterSpacing = false;
+	@Override
+	public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
+		return new CustomInputConnection(super.onCreateInputConnection(outAttrs),
+				true,this);
+	}
 
 	public EditText(Context context) {
 		super(context);
@@ -44,7 +52,6 @@ public class EditText extends android.widget.EditText {
 		setCustomFont(context, attrs);
 		setDisableCopyAndPaste(context,attrs);
 		setCancelClipboard(context,attrs);
-		setLetterSpacing(context,attrs);
 	}
 
 	public EditText(Context context, AttributeSet attrs, int defStyle) {
@@ -52,7 +59,6 @@ public class EditText extends android.widget.EditText {
 		setCustomFont(context, attrs);
 		setDisableCopyAndPaste(context,attrs);
 		setCancelClipboard(context,attrs);
-		setLetterSpacing(context,attrs);
 	}
 
 	/**
@@ -99,39 +105,9 @@ public class EditText extends android.widget.EditText {
 		}
 	}
 
-	/**
-	 * XML Methods
-	 * @param ctx
-	 * @param attrs
-	 */
-	private void setLetterSpacing(Context ctx, AttributeSet attrs) {
-		float letterSpacing = attrs.getAttributeFloatValue(
-				PixlUIContants.SCHEMA_URL, EDITTEXT_ATTRIBUTE_LETTER_SPACING, 0);
-
-		if(letterSpacing != 0 && !isInEditMode()){
-			setLetterSpacing(letterSpacing);
-		}
-	}
-
 	@Override
 	public void setText(CharSequence text, BufferType type) {
-		originalText = text;
-		if(useLetterSpacing){
-			applyLetterSpacing();
-		}else{
-			super.setText(text,type);
-		}
-	}
-
-	/**
-	 * Use only without TextWatcher. If you need to use a TextWatcher,
-	 * please do the job manually with buildStringWithLetterSpacing()
-	 * @param letterSpacing
-	 */
-	public void setLetterSpacing(float letterSpacing) {
-		this.letterSpacing = letterSpacing;
-		useLetterSpacing = true;
-		applyLetterSpacing();
+		super.setText(text,type);
 	}
 
 	/**
@@ -185,51 +161,6 @@ public class EditText extends android.widget.EditText {
 		}
 	}
 
-	/**
-	 * Get actual letter spacing
-	 * @return
-	 */
-	public float getLetterSpacing() {
-		return letterSpacing;
-	}
-	
-	/**
-	 * Can be usefull with letter spacing
-	 * @return
-	 */
-	public String getOriginalText() {
-		return originalText.toString();
-	}
-
-	/**
-	 * Applying letter spacing (by default = 0)
-	 */
-	private void applyLetterSpacing() {
-		super.setText(buildStringWithLetterSpacing(), BufferType.SPANNABLE);
-	}
-
-	/**
-	 * Retrieve string with letter spacing (by default = 0);
-	 * @return S T R I N G
-	 */
-	public SpannableString buildStringWithLetterSpacing()
-	{
-		StringBuilder builder = new StringBuilder();
-		for(int i = 0; i < originalText.length(); i++) {
-			builder.append(originalText.charAt(i));
-			if(i+1 < originalText.length()) {
-				builder.append("\u00A0");
-			}
-		}
-		SpannableString finalText = new SpannableString(builder.toString());
-		if(builder.toString().length() > 1) {
-			for(int i = 1; i < builder.toString().length(); i+=2) {
-				finalText.setSpan(new ScaleXSpan((letterSpacing+1)/10), i, i+1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-			}
-		}
-		return finalText;
-	}
-
 
 	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
@@ -276,5 +207,88 @@ public class EditText extends android.widget.EditText {
 		InputMethodManager mgr = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 		mgr.hideSoftInputFromWindow(this.getWindowToken(), 0);
 		this.clearFocus();
+	}
+
+	private class CustomInputConnection extends InputConnectionWrapper {
+
+		private int mLastLength;
+		private EditText mEdittext;
+		private boolean oldDevice;
+
+		public CustomInputConnection(InputConnection target, boolean mutable, EditText editText) {
+			super(target, mutable);
+			setEdittext(editText);
+			if (android.os.Build.VERSION.SDK_INT < 14) {
+				oldDevice = true;
+			}else{
+				oldDevice = false;
+			}
+		}
+
+		@Override
+		public boolean beginBatchEdit() {
+			mLastLength = length();
+			return super.beginBatchEdit();
+		}
+
+		@Override
+		public boolean sendKeyEvent(KeyEvent event) {
+			if(oldDevice){
+				if(event.getKeyCode() == KeyEvent.KEYCODE_DEL){
+					String text = getEdittext().getText().toString();
+					EditTextBatchListener listener = getEdittext().getListener();
+
+					if(listener!=null){
+						if(text.length()==0 && event.getAction()==KeyEvent.ACTION_UP){
+							listener.deleteKeyboardButton(getEdittext(), true);
+						}else{
+							listener.deleteKeyboardButton(getEdittext(), false);
+						}
+					}
+				}else{
+					if(event.getAction()==KeyEvent.ACTION_UP){
+						listener.addNewChar(getEdittext());
+					}
+				}
+			}
+			return super.sendKeyEvent(event);
+		}
+
+		@Override
+		public boolean endBatchEdit() {
+			final int newLength = length();
+
+			EditTextBatchListener listener = getEdittext().getListener();
+
+			if(listener != null && !oldDevice){
+				if (newLength <= mLastLength) {
+					if(mLastLength - newLength == 1) {
+						listener.deleteKeyboardButton(getEdittext(), false);
+					}else if(mLastLength == 0 && newLength == 0){
+						listener.deleteKeyboardButton(getEdittext(), true);
+					}
+				}else{
+					listener.addNewChar(getEdittext());
+				}
+			}
+			return super.endBatchEdit();
+		}
+
+		public EditText getEdittext() {
+			return mEdittext;
+		}
+
+		public void setEdittext(EditText mEdittext) {
+			this.mEdittext = mEdittext;
+		}
+
+	}
+
+	public EditTextBatchListener getListener() {
+		return listener;
+	}
+
+	public void setListener(EditTextBatchListener listener) {
+		this.listener = listener;
 	}
 }
