@@ -3,6 +3,7 @@ package com.neopixl.pixlui.components.edittext;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.SystemClock;
 import android.util.AttributeSet;
@@ -31,11 +32,18 @@ public class EditText extends android.widget.EditText {
 		public void deleteKeyboardButton(EditText edittext, boolean emptyText);
 	}
 
+	public interface EditTextFocusListener
+	{
+		public void requestFocus(EditText edittext);
+		public void loseFocus(EditText edittext);
+	}
+
 	private static String EDITTEXT_ATTRIBUTE_FONT_NAME = "typeface";
 	private static String EDITTEXT_ATTRIBUTE_COPY_AND_PASTE = "copyandpaste";
 	private static String EDITTEXT_ATTRIBUTE_CANCEL_CLIPBOARD_CONTENT = "clearclipboardcontent";
 
-	private EditTextBatchListener listener;
+	private EditTextBatchListener listenerBatch;
+	private EditTextFocusListener listenerFocus;
 
 	@Override
 	public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
@@ -188,6 +196,23 @@ public class EditText extends android.widget.EditText {
 	}
 
 	/**
+	 * Used to intercept the focus
+	 */
+	@Override
+	protected void onFocusChanged(boolean focused, int direction,
+			Rect previouslyFocusedRect) {
+		EditTextFocusListener listener = getFocusListener();
+		if(listener != null){
+			if(focused){
+				listener.requestFocus(this);
+			}else{
+				listener.loseFocus(this);
+			}
+		}
+		super.onFocusChanged(focused, direction, previouslyFocusedRect);
+	}
+
+	/**
 	 * Force show keyboard
 	 */
 	public void showKeyboard() {
@@ -236,7 +261,7 @@ public class EditText extends android.widget.EditText {
 			if(oldDevice){
 				if(event.getKeyCode() == KeyEvent.KEYCODE_DEL){
 					String text = getEdittext().getText().toString();
-					EditTextBatchListener listener = getEdittext().getListener();
+					EditTextBatchListener listener = getEdittext().getBatchListener();
 
 					if(listener!=null){
 						if(text.length()==0 && event.getAction()==KeyEvent.ACTION_UP){
@@ -247,7 +272,7 @@ public class EditText extends android.widget.EditText {
 					}
 				}else{
 					if(event.getAction()==KeyEvent.ACTION_UP){
-						listener.addNewChar(getEdittext());
+						listenerBatch.addNewChar(getEdittext());
 					}
 				}
 			}
@@ -258,7 +283,7 @@ public class EditText extends android.widget.EditText {
 		public boolean endBatchEdit() {
 			final int newLength = length();
 
-			EditTextBatchListener listener = getEdittext().getListener();
+			EditTextBatchListener listener = getEdittext().getBatchListener();
 
 			if(listener != null && !oldDevice){
 				if (newLength <= mLastLength) {
@@ -284,11 +309,19 @@ public class EditText extends android.widget.EditText {
 
 	}
 
-	public EditTextBatchListener getListener() {
-		return listener;
+	private EditTextBatchListener getBatchListener() {
+		return listenerBatch;
 	}
 
-	public void setListener(EditTextBatchListener listener) {
-		this.listener = listener;
+	public void setBatchListener(EditTextBatchListener listener) {
+		this.listenerBatch = listener;
+	}
+
+	private EditTextFocusListener getFocusListener() {
+		return listenerFocus;
+	}
+
+	public void setFocusListener(EditTextFocusListener listenerFocus) {
+		this.listenerFocus = listenerFocus;
 	}
 }
