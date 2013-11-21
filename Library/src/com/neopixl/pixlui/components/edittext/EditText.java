@@ -26,12 +26,22 @@ import com.neopixl.pixlui.intern.PixlUIContants;
 
 public class EditText extends android.widget.EditText {
 
+	/**
+	 * Usefull if you need to track user input (especially delete button)
+	 * @author odemolliens
+	 *
+	 */
 	public interface EditTextBatchListener
 	{
 		public void addNewChar(EditText edittext);
 		public void deleteKeyboardButton(EditText edittext, boolean emptyText);
 	}
 
+	/**
+	 * Usefull if you need to track edittext focus
+	 * @author odemolliens
+	 *
+	 */
 	public interface EditTextFocusListener
 	{
 		public void requestFocus(EditText edittext);
@@ -209,6 +219,7 @@ public class EditText extends android.widget.EditText {
 				listener.loseFocus(this);
 			}
 		}
+
 		super.onFocusChanged(focused, direction, previouslyFocusedRect);
 	}
 
@@ -239,6 +250,7 @@ public class EditText extends android.widget.EditText {
 		private int mLastLength;
 		private EditText mEdittext;
 		private boolean oldDevice;
+		private KeyEvent mKeyEvent;
 
 		public CustomInputConnection(InputConnection target, boolean mutable, EditText editText) {
 			super(target, mutable);
@@ -253,11 +265,15 @@ public class EditText extends android.widget.EditText {
 		@Override
 		public boolean beginBatchEdit() {
 			mLastLength = length();
+			mKeyEvent = null;
 			return super.beginBatchEdit();
 		}
 
 		@Override
 		public boolean sendKeyEvent(KeyEvent event) {
+
+			mKeyEvent = event;
+
 			if(oldDevice){
 				if(event.getKeyCode() == KeyEvent.KEYCODE_DEL){
 					String text = getEdittext().getText().toString();
@@ -276,11 +292,13 @@ public class EditText extends android.widget.EditText {
 					}
 				}
 			}
+
 			return super.sendKeyEvent(event);
 		}
 
 		@Override
 		public boolean endBatchEdit() {
+
 			final int newLength = length();
 
 			EditTextBatchListener listener = getEdittext().getBatchListener();
@@ -288,9 +306,37 @@ public class EditText extends android.widget.EditText {
 			if(listener != null && !oldDevice){
 				if (newLength <= mLastLength) {
 					if(mLastLength - newLength == 1) {
-						listener.deleteKeyboardButton(getEdittext(), false);
+
+						if(mKeyEvent==null){
+							listener.deleteKeyboardButton(getEdittext(), false);
+						}else{
+							char unicodeChar = (char)mKeyEvent.getUnicodeChar();
+							String text = getEdittext().getText().toString();
+							text = text + unicodeChar;
+							getEdittext().setText(text);
+							listener.addNewChar(getEdittext());
+						}
+
 					}else if(mLastLength == 0 && newLength == 0){
-						listener.deleteKeyboardButton(getEdittext(), true);
+
+						if(mKeyEvent==null){
+							listener.deleteKeyboardButton(getEdittext(), true);
+						}else{
+							char unicodeChar = (char)mKeyEvent.getUnicodeChar();
+							String text = getEdittext().getText().toString();
+							text = text + unicodeChar;
+							getEdittext().setText(text);
+							listener.addNewChar(getEdittext());
+						}
+
+					}else{
+						if(mKeyEvent!=null){
+							char unicodeChar = (char)mKeyEvent.getUnicodeChar();
+							String text = getEdittext().getText().toString();
+							text = text + unicodeChar;
+							getEdittext().setText(text);
+							listener.addNewChar(getEdittext());
+						}
 					}
 				}else{
 					listener.addNewChar(getEdittext());
