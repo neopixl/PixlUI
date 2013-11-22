@@ -1,3 +1,20 @@
+/*
+ Copyright 2013 Neopixl
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
+
+file except in compliance with the License. You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF 
+
+ANY KIND, either express or implied. See the License for the specific language governing
+
+permissions and limitations under the License.
+ */
 package com.neopixl.pixlui.components.edittext;
 
 import java.util.List;
@@ -11,7 +28,6 @@ import android.graphics.Typeface;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.ActionMode.Callback;
 import android.view.ContextMenu;
@@ -31,6 +47,11 @@ import com.android.export.AllCapsTransformationMethod;
 import com.neopixl.pixlui.components.textview.FontFactory;
 import com.neopixl.pixlui.intern.PixlUIContants;
 
+/**
+ * Provide more possibility with EditText and enable new methods on old api
+ * 
+ * @author Olivier Demolliens. @odemolliens Dev with Neopixl
+ */
 public class EditText extends android.widget.EditText {
 
 	/**
@@ -39,11 +60,11 @@ public class EditText extends android.widget.EditText {
 	private static final String EDITTEXT_ATTRIBUTE_FONT_NAME = "typeface";
 	private static final String EDITTEXT_ATTRIBUTE_COPY_AND_PASTE = "copyandpaste";
 	private static final String EDITTEXT_ATTRIBUTE_CANCEL_CLIPBOARD_CONTENT = "clearclipboardcontent";
+	private static final String EDITTEXT_OS_ATTRIBUTE_TEXT_ALL_CAPS = "textAllCaps";
 
 	/**
 	 * Provider Keyboard
 	 */
-
 	private static final String EDITTEXT_KEYBOARD_SENSE = "com.htc.android.htcime/.HTCIMEService";
 
 	/**
@@ -77,10 +98,7 @@ public class EditText extends android.widget.EditText {
 		setDisableCopyAndPaste(context, attrs);
 		setCancelClipboard(context, attrs);
 		if (isOldDeviceTextAllCaps()) {
-			Log.e("EditText", "constructor OK");
 			setAllCaps(context, attrs);
-		} else {
-			Log.e("EditText", "constructor FALSE");
 		}
 	}
 
@@ -91,10 +109,7 @@ public class EditText extends android.widget.EditText {
 		setDisableCopyAndPaste(context, attrs);
 		setCancelClipboard(context, attrs);
 		if (isOldDeviceTextAllCaps()) {
-			Log.e("EditText", "constructor OK");
 			setAllCaps(context, attrs);
-		} else {
-			Log.e("EditText", "constructor FALSE");
 		}
 	}
 
@@ -166,38 +181,44 @@ public class EditText extends android.widget.EditText {
 		}
 	}
 
+	/**
+	 * XML methods
+	 *
+	 * @param ctx
+	 * @param attrs
+	 */
 	private void setAllCaps(Context ctx, AttributeSet attrs) {
-		boolean allCaps = attrs.getAttributeBooleanValue(
-				PixlUIContants.SCHEMA_URL_OS, "textAllCaps", false);
 
-		Log.e("EditText", "setAllCaps(XML)");
+		int indexSize = attrs.getAttributeCount();
+
+		boolean allCaps = false;
+
+		for (int i = 0; i < indexSize; i++) {
+			if (attrs.getAttributeName(i).equals(
+					EDITTEXT_OS_ATTRIBUTE_TEXT_ALL_CAPS)) {
+				allCaps = attrs.getAttributeBooleanValue(i, false);
+				break;
+			}
+		}
 
 		if (allCaps && !isInEditMode()) {
-			Log.e("EditText", "setAllCaps(XML) - SUCCESS");
 			setAllCaps(allCaps);
-		} else {
-			Log.e("EditText", "setAllCaps(XML) - FALSE");
 		}
-	}
-
-	@Override
-	public void setText(CharSequence text, BufferType type) {
-		super.setText(text, type);
 	}
 
 	/**
 	 * Use this method to uppercase all char in text.
 	 * 
 	 * @param allCaps
-	 * 
 	 */
 	@SuppressLint("NewApi")
 	@Override
 	public void setAllCaps(boolean allCaps) {
+		
+		//FIXME: if user input new char, it's generate a crash on Paint methods
+		
 		if (this.isOldDeviceTextAllCaps()) {
-			Log.e("EditText", "isOldDeviceTextAllCaps");
 			if (allCaps) {
-				Log.e("EditText", "setTransformationMethod");
 				setTransformationMethod(new AllCapsTransformationMethod(
 						getContext()));
 			} else {
@@ -378,8 +399,6 @@ public class EditText extends android.widget.EditText {
 		return false;
 	}
 
-
-
 	private class CustomInputConnection extends InputConnectionWrapper {
 
 		private int mLastLength;
@@ -394,7 +413,6 @@ public class EditText extends android.widget.EditText {
 
 		@Override
 		public boolean beginBatchEdit() {
-			Log.e("EditText", "beginBatchEdit");
 			mLastLength = length();
 			mKeyEvent = null;
 			return super.beginBatchEdit();
@@ -402,7 +420,6 @@ public class EditText extends android.widget.EditText {
 
 		@Override
 		public boolean sendKeyEvent(KeyEvent event) {
-			Log.e("EditText", "sendKeyEvent:" + event);
 			mKeyEvent = event;
 
 			if (getEdittext().isOldDeviceKeyboard()) {
@@ -431,7 +448,6 @@ public class EditText extends android.widget.EditText {
 
 		@Override
 		public boolean endBatchEdit() {
-			Log.e("EditText", "endBatchEdit");
 			final int newLength = length();
 
 			EditTextBatchListener listener = getEdittext().getBatchListener();
@@ -489,7 +505,7 @@ public class EditText extends android.widget.EditText {
 			this.mEdittext = mEdittext;
 		}
 	}
-	
+
 	public boolean isOldDeviceTextAllCaps() {
 		return mOldDeviceTextAllCaps;
 	}
