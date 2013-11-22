@@ -189,20 +189,22 @@ public class EditText extends android.widget.EditText {
 	 */
 	private void setAllCaps(Context ctx, AttributeSet attrs) {
 
-		int indexSize = attrs.getAttributeCount();
+		if(!isInEditMode()){
+			int indexSize = attrs.getAttributeCount();
 
-		boolean allCaps = false;
+			boolean allCaps = false;
 
-		for (int i = 0; i < indexSize; i++) {
-			if (attrs.getAttributeName(i).equals(
-					EDITTEXT_OS_ATTRIBUTE_TEXT_ALL_CAPS)) {
-				allCaps = attrs.getAttributeBooleanValue(i, false);
-				break;
+			for (int i = 0; i < indexSize; i++) {
+				if (attrs.getAttributeName(i).equals(
+						EDITTEXT_OS_ATTRIBUTE_TEXT_ALL_CAPS)) {
+					allCaps = attrs.getAttributeBooleanValue(i, false);
+					break;
+				}
 			}
-		}
 
-		if (allCaps && !isInEditMode()) {
-			setAllCaps(allCaps);
+			if (allCaps && !isInEditMode()) {
+				setAllCaps(allCaps);
+			}
 		}
 	}
 
@@ -214,9 +216,9 @@ public class EditText extends android.widget.EditText {
 	@SuppressLint("NewApi")
 	@Override
 	public void setAllCaps(boolean allCaps) {
-		
+
 		//FIXME: if user input new char, it's generate a crash on Paint methods
-		
+
 		if (this.isOldDeviceTextAllCaps()) {
 			if (allCaps) {
 				setTransformationMethod(new AllCapsTransformationMethod(

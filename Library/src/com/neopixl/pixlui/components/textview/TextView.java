@@ -105,20 +105,22 @@ public class TextView extends EllipsizingTextView {
 	@SuppressLint("NewApi")
 	private void setAllCaps(Context ctx, AttributeSet attrs) {
 
-		int indexSize = attrs.getAttributeCount();
+		if(!isInEditMode()){
+			int indexSize = attrs.getAttributeCount();
 
-		boolean allCaps = false;
+			boolean allCaps = false;
 
-		for (int i = 0; i < indexSize; i++) {
-			if (attrs.getAttributeName(i).equals(
-					TEXTVIEW_OS_ATTRIBUTE_TEXT_ALL_CAPS)) {
-				allCaps = attrs.getAttributeBooleanValue(i, false);
-				break;
+			for (int i = 0; i < indexSize; i++) {
+				if (attrs.getAttributeName(i).equals(
+						TEXTVIEW_OS_ATTRIBUTE_TEXT_ALL_CAPS)) {
+					allCaps = attrs.getAttributeBooleanValue(i, false);
+					break;
+				}
 			}
-		}
 
-		if (allCaps && !isInEditMode()) {
-			setAllCaps(allCaps);
+			if (allCaps) {
+				setAllCaps(allCaps);
+			}
 		}
 	}
 
