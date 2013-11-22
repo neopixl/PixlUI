@@ -127,7 +127,6 @@ public class EditText extends android.widget.EditText {
 			} else {
 				setOldDeviceKeyboard(false);
 			}
-
 			setOldDeviceTextAllCaps(false);
 		}
 	}
@@ -425,10 +424,13 @@ public class EditText extends android.widget.EditText {
 			mKeyEvent = event;
 
 			if (getEdittext().isOldDeviceKeyboard()) {
+
+				EditTextBatchListener listener = getEdittext()
+						.getBatchListener();
+
 				if (event.getKeyCode() == KeyEvent.KEYCODE_DEL) {
 					String text = getEdittext().getText().toString();
-					EditTextBatchListener listener = getEdittext()
-							.getBatchListener();
+
 
 					if (listener != null) {
 						if (text.length() == 0
@@ -439,8 +441,8 @@ public class EditText extends android.widget.EditText {
 						}
 					}
 				} else {
-					if (event.getAction() == KeyEvent.ACTION_UP) {
-						listenerBatch.addNewChar(getEdittext());
+					if (listener!= null && event.getAction() == KeyEvent.ACTION_UP) {
+						listener.addNewChar(getEdittext());
 					}
 				}
 			}
