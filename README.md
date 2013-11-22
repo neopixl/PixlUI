@@ -1,7 +1,32 @@
 ![Logo](https://raw.github.com/neopixl/PixlUI/master/Sample/res/drawable-xhdpi/small.png ) PixlUI
 ======
 
-Provide few methods for Button/TextView/EditText.
+Provide few methods for visual elements.
+
+
+Button:
+- Custom font
+- Text All caps (works on all API version)
+
+EditText:
+- Custom font
+- Copy/Cut/Paste (enable/disable) (works on all API version)
+- Cancel clipboard content (works on all API version)
+- Text All caps (works on all API version) - (in progress)
+- Focus listener
+- Batch listener (replace TextWatcher, wich that you can intercept DEL touch on all API)
+
+Image View:
+- Alpha  (works on all API version)
+
+RelativeLayout:
+- Alpha  (works on all API version)
+
+
+TextView:
+- Contains a fix to do proper ellipsizing
+- Custom font
+- Text All caps (works on all API version)
 
 Screenshot
 ==========
