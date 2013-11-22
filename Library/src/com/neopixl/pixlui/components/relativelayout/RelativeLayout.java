@@ -15,7 +15,7 @@ ANY KIND, either express or implied. See the License for the specific language g
 
 permissions and limitations under the License.
  */
-package com.neopixl.pixlui.components.imageview;
+package com.neopixl.pixlui.components.relativelayout;
 
 
 import android.annotation.SuppressLint;
@@ -28,12 +28,12 @@ import android.util.AttributeSet;
  * @author Olivier Demolliens. @odemolliens
  * Dev with Neopixl
  */
-public class ImageView extends android.widget.ImageView {
+public class RelativeLayout extends android.widget.RelativeLayout {
 
 	/**
 	 * XML Attribute
 	 */
-	private static final String IMAGEVIEW_OS_ATTRIBUTE_TEXT_ALPHA = "alpha";
+	private static final String RELATIVE_LAYOUT_OS_ATTRIBUTE_TEXT_ALPHA = "alpha";
 
 	/**
 	 * State
@@ -46,12 +46,12 @@ public class ImageView extends android.widget.ImageView {
 	 */
 	private float mAlpha = 1;
 
-	public ImageView(Context context) {
+	public RelativeLayout(Context context) {
 		super(context);
 		editTextVersion();
 	}
 
-	public ImageView(Context context, AttributeSet attrs) {
+	public RelativeLayout(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		editTextVersion();
 		if (isOldDeviceTextAlpha()) {
@@ -59,7 +59,7 @@ public class ImageView extends android.widget.ImageView {
 		}
 	}
 
-	public ImageView(Context context, AttributeSet attrs, int defStyle) {
+	public RelativeLayout(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		editTextVersion();
 		if (isOldDeviceTextAlpha()) {
@@ -85,7 +85,7 @@ public class ImageView extends android.widget.ImageView {
 	 * @param attrs
 	 */
 	private void setAlpha(Context ctx, AttributeSet attrs) {
-
+		
 		if(!isInEditMode()){
 			int indexSize = attrs.getAttributeCount();
 
@@ -93,7 +93,7 @@ public class ImageView extends android.widget.ImageView {
 
 			for (int i = 0; i < indexSize; i++) {
 				if (attrs.getAttributeName(i).equals(
-						IMAGEVIEW_OS_ATTRIBUTE_TEXT_ALPHA)) {
+						RELATIVE_LAYOUT_OS_ATTRIBUTE_TEXT_ALPHA)) {
 					xmlAlpha = attrs.getAttributeFloatValue(i, 1);
 					break;
 				}
@@ -118,24 +118,10 @@ public class ImageView extends android.widget.ImageView {
 		}
 	}
 
-	/**
-	 * Enable apha for old api
-	 * @param alpha
-	 */
-	@Override
-	@Deprecated
-	public void setAlpha(int alpha) {
-		if (this.isOldDeviceTextAlpha()) {
-			set_Alpha(alpha);
-		}else{
-			super.setAlpha(alpha);
-		}
-	}
-
 	@Override
 	public void onDraw(Canvas canvas){
 		if(mAlpha!=1){
-			int drawedAlpha = (int) (mAlpha * 100);
+			int drawedAlpha = (int) (mAlpha * 255);
 			canvas.saveLayerAlpha(0, 0, canvas.getWidth(), canvas.getHeight(), drawedAlpha, Canvas.HAS_ALPHA_LAYER_SAVE_FLAG);
 		}
 		super.onDraw(canvas);

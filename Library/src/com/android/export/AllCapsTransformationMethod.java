@@ -19,7 +19,6 @@ import java.util.Locale;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.util.Log;
 import android.view.View;
 
 /**
@@ -40,7 +39,6 @@ public class AllCapsTransformationMethod implements TransformationMethod2 {
     @Override
     public CharSequence getTransformation(CharSequence source, View view) {
        // if (mEnabled) {
-    	Log.e("AllCapsTransformationMethod",""+source.toString());
             return source != null ? source.toString().toUpperCase(mLocale) : null;
         //}
         //Log.w(TAG, "Caller did not enable length changes; not transforming text");
