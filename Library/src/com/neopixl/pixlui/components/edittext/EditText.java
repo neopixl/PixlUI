@@ -27,6 +27,8 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.SystemClock;
 import android.provider.Settings;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.ActionMode;
 import android.view.ActionMode.Callback;
@@ -66,12 +68,16 @@ public class EditText extends android.widget.EditText {
 	 * Provider Keyboard
 	 */
 	private static final String EDITTEXT_KEYBOARD_SENSE = "com.htc.android.htcime/.HTCIMEService";
+	private static final String EDITTEXT_KEYBOARD_OLD_SAMSUNG = "com.sec.android.inputmethod.axt9/.AxT9IME";
+	private static final String EDITTEXT_KEYBOARD_SAMSUNG = "com.sec.android.inputmethod/.SamsungKeypad";
+	private static final String EDITTEXT_KEYBOARD_LG = "com.lge.ime/.LgeImeImpl";
 
 	/**
 	 * Listeners
 	 */
 	private EditTextBatchListener listenerBatch;
 	private EditTextFocusListener listenerFocus;
+	private CustomTextWatcher listenerTextWatcherInternal;
 
 	/**
 	 * State
@@ -81,7 +87,6 @@ public class EditText extends android.widget.EditText {
 
 	@Override
 	public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
-
 		return new CustomInputConnection(
 				super.onCreateInputConnection(outAttrs), true, this);
 	}
@@ -120,15 +125,28 @@ public class EditText extends android.widget.EditText {
 		if (android.os.Build.VERSION.SDK_INT < 14) {
 			setOldDeviceKeyboard(true);
 			setOldDeviceTextAllCaps(true);
+
 		} else {
-			// Special fix for HTC Sense Keyboard
-			if (isASenseKeyboard()) {
+			/*// Special fix for custom keyboard
+			if (isASenseKeyboard() || isALGKeyboard()) {
 				setOldDeviceKeyboard(true);
 			} else {
 				setOldDeviceKeyboard(false);
-			}
+			}*/
+			setOldDeviceKeyboard(true);
 			setOldDeviceTextAllCaps(false);
 		}
+		
+		setListenerTextWatcherInternal(new CustomTextWatcher(this));
+		addTextChangedListener(getListenerTextWatcherInternal());
+	}
+	
+
+
+	@Override
+	protected void onTextChanged(CharSequence text, int start,
+			int lengthBefore, int lengthAfter) {
+		super.onTextChanged(text, start, lengthBefore, lengthAfter);
 	}
 
 	/**
@@ -367,8 +385,47 @@ public class EditText extends android.widget.EditText {
 	 * 
 	 * @return
 	 */
-	private boolean isASenseKeyboard() {
+	public boolean isASenseKeyboard() {
 		if (getKeyboardName().equals(EDITTEXT_KEYBOARD_SENSE)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Return if cellphone use a old samsung keyboard
+	 * 
+	 * @return
+	 */
+	public boolean isAOldSamsungKeyboard() {
+		if (getKeyboardName().equals(EDITTEXT_KEYBOARD_OLD_SAMSUNG)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Return if cellphone use a samsung keyboard
+	 * 
+	 * @return
+	 */
+	public boolean isASamsungKeyboard() {
+		if (getKeyboardName().equals(EDITTEXT_KEYBOARD_SAMSUNG)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Return if cellphone use a lg keyboard
+	 * 
+	 * @return
+	 */
+	public boolean isALGKeyboard() {
+		if (getKeyboardName().equals(EDITTEXT_KEYBOARD_LG)) {
 			return true;
 		} else {
 			return false;
@@ -400,6 +457,45 @@ public class EditText extends android.widget.EditText {
 		return false;
 	}
 
+	private class CustomTextWatcher implements TextWatcher{
+
+		private EditText mEdittext;
+		
+		public CustomTextWatcher(EditText editText) {
+			super();
+			setEdittext(editText);
+		}
+
+		@Override
+		public void afterTextChanged(Editable s) {
+		}
+
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count,
+				int after) {
+		}
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before,
+				int count) {
+			
+			EditTextBatchListener listener = getEdittext()
+					.getBatchListener();
+			
+			if(listener!=null && count == 1){
+				listener.addNewChar(getEdittext());
+			}
+		}
+
+		public EditText getEdittext() {
+			return mEdittext;
+		}
+
+		public void setEdittext(EditText mEdittext) {
+			this.mEdittext = mEdittext;
+		}
+	}
+
 	private class CustomInputConnection extends InputConnectionWrapper {
 
 		private int mLastLength;
@@ -423,7 +519,7 @@ public class EditText extends android.widget.EditText {
 		public boolean sendKeyEvent(KeyEvent event) {
 			mKeyEvent = event;
 
-			if (getEdittext().isOldDeviceKeyboard()) {
+			//if (getEdittext().isOldDeviceKeyboard()) {
 
 				EditTextBatchListener listener = getEdittext()
 						.getBatchListener();
@@ -431,72 +527,74 @@ public class EditText extends android.widget.EditText {
 				if (event.getKeyCode() == KeyEvent.KEYCODE_DEL) {
 					String text = getEdittext().getText().toString();
 
-
-					if (listener != null) {
-						if (text.length() == 0
-								&& event.getAction() == KeyEvent.ACTION_UP) {
+					if (listener != null && event.getAction() == KeyEvent.ACTION_DOWN) {
+						if (text.length() == 0) {
 							listener.deleteKeyboardButton(getEdittext(), true);
 						} else {
 							listener.deleteKeyboardButton(getEdittext(), false);
 						}
 					}
 				} else {
-					if (listener!= null && event.getAction() == KeyEvent.ACTION_UP) {
+					/*if (listener!= null && event.getAction() == KeyEvent.ACTION_UP) {
+						Log.e("EditText","addNewChar"+event);
 						listener.addNewChar(getEdittext());
-					}
+					}*/
 				}
-			}
+			/*}else{
+				Log.e("EditText","not old method");
+			}*/
 
 			return super.sendKeyEvent(event);
 		}
 
 		@Override
 		public boolean endBatchEdit() {
+
 			final int newLength = length();
 
 			EditTextBatchListener listener = getEdittext().getBatchListener();
 
-			if (listener != null && !getEdittext().isOldDeviceKeyboard()) {
+			if (listener != null /*&& !getEdittext().isOldDeviceKeyboard()*/) {
 				if (newLength <= mLastLength) {
 					if (mLastLength - newLength == 1) {
 
 						if (mKeyEvent == null) {
 							listener.deleteKeyboardButton(getEdittext(), false);
-						} else {
+						}/* else {
 							char unicodeChar = (char) mKeyEvent
 									.getUnicodeChar();
 							String text = getEdittext().getText().toString();
 							text = text + unicodeChar;
 							getEdittext().setText(text);
 							listener.addNewChar(getEdittext());
-						}
+						}*/
 
 					} else if (mLastLength == 0 && newLength == 0) {
 
 						if (mKeyEvent == null) {
 							listener.deleteKeyboardButton(getEdittext(), true);
-						} else {
+						}/* else {
 							char unicodeChar = (char) mKeyEvent
 									.getUnicodeChar();
 							String text = getEdittext().getText().toString();
 							text = text + unicodeChar;
 							getEdittext().setText(text);
 							listener.addNewChar(getEdittext());
-						}
+						}*/
 
 					} else {
-						if (mKeyEvent != null) {
+						/*if (mKeyEvent != null) {
 							char unicodeChar = (char) mKeyEvent
 									.getUnicodeChar();
 							String text = getEdittext().getText().toString();
 							text = text + unicodeChar;
 							getEdittext().setText(text);
 							listener.addNewChar(getEdittext());
-						}
+						}*/
 					}
-				} else {
+				} /*else {
 					listener.addNewChar(getEdittext());
-				}
+				}*/
 			}
 			return super.endBatchEdit();
 		}
@@ -540,5 +638,14 @@ public class EditText extends android.widget.EditText {
 
 	public void setFocusListener(EditTextFocusListener listenerFocus) {
 		this.listenerFocus = listenerFocus;
+	}
+
+	public CustomTextWatcher getListenerTextWatcherInternal() {
+		return listenerTextWatcherInternal;
+	}
+
+	public void setListenerTextWatcherInternal(
+			CustomTextWatcher listenerTextWatcherInternal) {
+		this.listenerTextWatcherInternal = listenerTextWatcherInternal;
 	}
 }
