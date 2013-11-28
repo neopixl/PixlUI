@@ -30,6 +30,7 @@ import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.ActionMode.Callback;
 import android.view.ContextMenu;
@@ -62,6 +63,7 @@ public class EditText extends android.widget.EditText {
 	private static final String EDITTEXT_ATTRIBUTE_FONT_NAME = "typeface";
 	private static final String EDITTEXT_ATTRIBUTE_COPY_AND_PASTE = "copyandpaste";
 	private static final String EDITTEXT_ATTRIBUTE_CANCEL_CLIPBOARD_CONTENT = "clearclipboardcontent";
+	private static final String EDITTEXT_ATTRIBUTE_AUTO_FOCUS = "autofocus";
 	private static final String EDITTEXT_OS_ATTRIBUTE_TEXT_ALL_CAPS = "textAllCaps";
 
 	/**
@@ -84,6 +86,9 @@ public class EditText extends android.widget.EditText {
 	 */
 	private boolean mOldDeviceKeyboard;
 	private boolean mOldDeviceTextAllCaps;
+	private boolean mAutoFocus;
+
+	private InputMethodManager mImm;
 
 	@Override
 	public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
@@ -102,6 +107,7 @@ public class EditText extends android.widget.EditText {
 		setCustomFont(context, attrs);
 		setDisableCopyAndPaste(context, attrs);
 		setCancelClipboard(context, attrs);
+		setAutoFocus(context,attrs);
 		if (isOldDeviceTextAllCaps()) {
 			setAllCaps(context, attrs);
 		}
@@ -113,6 +119,7 @@ public class EditText extends android.widget.EditText {
 		setCustomFont(context, attrs);
 		setDisableCopyAndPaste(context, attrs);
 		setCancelClipboard(context, attrs);
+		setAutoFocus(context,attrs);
 		if (isOldDeviceTextAllCaps()) {
 			setAllCaps(context, attrs);
 		}
@@ -127,26 +134,19 @@ public class EditText extends android.widget.EditText {
 			setOldDeviceTextAllCaps(true);
 
 		} else {
-			/*// Special fix for custom keyboard
-			if (isASenseKeyboard() || isALGKeyboard()) {
-				setOldDeviceKeyboard(true);
-			} else {
-				setOldDeviceKeyboard(false);
-			}*/
 			setOldDeviceKeyboard(true);
 			setOldDeviceTextAllCaps(false);
 		}
-		
+
+		//Custom internal listener
 		setListenerTextWatcherInternal(new CustomTextWatcher(this));
 		addTextChangedListener(getListenerTextWatcherInternal());
-	}
-	
 
+		//System service
+		mImm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
-	@Override
-	protected void onTextChanged(CharSequence text, int start,
-			int lengthBefore, int lengthAfter) {
-		super.onTextChanged(text, start, lengthBefore, lengthAfter);
+		//Autofocus disabled by default
+		mAutoFocus = false;
 	}
 
 	/**
@@ -226,6 +226,33 @@ public class EditText extends android.widget.EditText {
 	}
 
 	/**
+	 * Enable autofocus mode (for keyboard).
+	 *
+	 * @param ctx
+	 * @param attrs
+	 */
+	private void setAutoFocus(Context ctx, AttributeSet attrs) {
+
+		if(!isInEditMode()){
+			int indexSize = attrs.getAttributeCount();
+
+			boolean autoFocus = false;
+
+			for (int i = 0; i < indexSize; i++) {
+				if (attrs.getAttributeName(i).equals(
+						EDITTEXT_ATTRIBUTE_AUTO_FOCUS)) {
+					autoFocus = attrs.getAttributeBooleanValue(i, false);
+					break;
+				}
+			}
+
+			if (autoFocus && !isInEditMode()) {
+				setAutoFocus(autoFocus);
+			}
+		}
+	}
+
+	/**
 	 * Use this method to uppercase all char in text.
 	 * 
 	 * @param allCaps
@@ -235,7 +262,6 @@ public class EditText extends android.widget.EditText {
 	public void setAllCaps(boolean allCaps) {
 
 		//FIXME: if user input new char, it's generate a crash on Paint methods
-
 		if (this.isOldDeviceTextAllCaps()) {
 			if (allCaps) {
 				setTransformationMethod(new AllCapsTransformationMethod(
@@ -341,19 +367,28 @@ public class EditText extends android.widget.EditText {
 		}
 
 		super.onFocusChanged(focused, direction, previouslyFocusedRect);
+		
+		if(mAutoFocus){
+			if(focused){
+				Log.e("EDITTEXT","showSoftInput");
+				mImm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
+			}else{
+				Log.e("EDITTEXT","hideSoftInputFromWindow");
+				mImm.hideSoftInputFromWindow(this.getWindowToken(), 0);
+			}
+			mImm.toggleSoftInput(0, 0);
+		}
 	}
 
 	/**
 	 * Force show keyboard
 	 */
 	public void showKeyboard() {
-		InputMethodManager mgr = (InputMethodManager) getContext()
-				.getSystemService(Context.INPUT_METHOD_SERVICE);
-		mgr.showSoftInput(this, InputMethodManager.SHOW_FORCED);
 		this.requestFocus();
+		mImm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
 		// Trick used to create a fake touch event on the editText
 		MotionEvent event = MotionEvent.obtain(0, SystemClock.uptimeMillis(),
-				MotionEvent.ACTION_UP, this.getMeasuredWidth(), 0, 0);
+				MotionEvent.ACTION_DOWN | MotionEvent.ACTION_UP, this.getMeasuredWidth(), 0, 0);
 		this.onTouchEvent(event);
 		event.recycle();
 	}
@@ -362,10 +397,8 @@ public class EditText extends android.widget.EditText {
 	 * Force hide keyboard
 	 */
 	public void hideKeyboard() {
-		InputMethodManager mgr = (InputMethodManager) getContext()
-				.getSystemService(Context.INPUT_METHOD_SERVICE);
-		mgr.hideSoftInputFromWindow(this.getWindowToken(), 0);
 		this.clearFocus();
+		mImm.hideSoftInputFromWindow(this.getWindowToken(), 0);
 	}
 
 	/**
@@ -460,7 +493,7 @@ public class EditText extends android.widget.EditText {
 	private class CustomTextWatcher implements TextWatcher{
 
 		private EditText mEdittext;
-		
+
 		public CustomTextWatcher(EditText editText) {
 			super();
 			setEdittext(editText);
@@ -478,10 +511,10 @@ public class EditText extends android.widget.EditText {
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before,
 				int count) {
-			
+
 			EditTextBatchListener listener = getEdittext()
 					.getBatchListener();
-			
+
 			if(listener!=null && count == 1){
 				listener.addNewChar(getEdittext());
 			}
@@ -521,25 +554,25 @@ public class EditText extends android.widget.EditText {
 
 			//if (getEdittext().isOldDeviceKeyboard()) {
 
-				EditTextBatchListener listener = getEdittext()
-						.getBatchListener();
+			EditTextBatchListener listener = getEdittext()
+					.getBatchListener();
 
-				if (event.getKeyCode() == KeyEvent.KEYCODE_DEL) {
-					String text = getEdittext().getText().toString();
+			if (event.getKeyCode() == KeyEvent.KEYCODE_DEL) {
+				String text = getEdittext().getText().toString();
 
-					if (listener != null && event.getAction() == KeyEvent.ACTION_DOWN) {
-						if (text.length() == 0) {
-							listener.deleteKeyboardButton(getEdittext(), true);
-						} else {
-							listener.deleteKeyboardButton(getEdittext(), false);
-						}
+				if (listener != null && event.getAction() == KeyEvent.ACTION_DOWN) {
+					if (text.length() == 0) {
+						listener.deleteKeyboardButton(getEdittext(), true);
+					} else {
+						listener.deleteKeyboardButton(getEdittext(), false);
 					}
-				} else {
-					/*if (listener!= null && event.getAction() == KeyEvent.ACTION_UP) {
+				}
+			} else {
+				/*if (listener!= null && event.getAction() == KeyEvent.ACTION_UP) {
 						Log.e("EditText","addNewChar"+event);
 						listener.addNewChar(getEdittext());
 					}*/
-				}
+			}
 			/*}else{
 				Log.e("EditText","not old method");
 			}*/
@@ -647,5 +680,13 @@ public class EditText extends android.widget.EditText {
 	public void setListenerTextWatcherInternal(
 			CustomTextWatcher listenerTextWatcherInternal) {
 		this.listenerTextWatcherInternal = listenerTextWatcherInternal;
+	}
+
+	public boolean isAutoFocus() {
+		return mAutoFocus;
+	}
+
+	public void setAutoFocus(boolean mAutoFocus) {
+		this.mAutoFocus = mAutoFocus;
 	}
 }
