@@ -48,6 +48,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.android.export.AllCapsTransformationMethod;
 import com.neopixl.pixlui.components.textview.FontFactory;
+import com.neopixl.pixlui.intern.CustomPasswordTransformationMethod;
 import com.neopixl.pixlui.intern.PixlUIContants;
 
 /**
@@ -87,6 +88,7 @@ public class EditText extends android.widget.EditText {
 	private boolean mOldDeviceKeyboard;
 	private boolean mOldDeviceTextAllCaps;
 	private boolean mAutoFocus;
+	private boolean mCustomPassWordTransformation;
 
 	private InputMethodManager mImm;
 
@@ -147,6 +149,7 @@ public class EditText extends android.widget.EditText {
 
 		//Autofocus disabled by default
 		mAutoFocus = false;
+		mCustomPassWordTransformation = false;
 	}
 
 	/**
@@ -367,11 +370,11 @@ public class EditText extends android.widget.EditText {
 		}
 
 		super.onFocusChanged(focused, direction, previouslyFocusedRect);
-		
+
 		if(mAutoFocus){
 			if(focused){
 				Log.e("EDITTEXT","showSoftInput");
-				mImm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
+				mImm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT | InputMethodManager.SHOW_FORCED);
 			}else{
 				Log.e("EDITTEXT","hideSoftInputFromWindow");
 				mImm.hideSoftInputFromWindow(this.getWindowToken(), 0);
@@ -385,7 +388,7 @@ public class EditText extends android.widget.EditText {
 	 */
 	public void showKeyboard() {
 		this.requestFocus();
-		mImm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
+		mImm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT | InputMethodManager.SHOW_FORCED);
 		// Trick used to create a fake touch event on the editText
 		MotionEvent event = MotionEvent.obtain(0, SystemClock.uptimeMillis(),
 				MotionEvent.ACTION_DOWN | MotionEvent.ACTION_UP, this.getMeasuredWidth(), 0, 0);
@@ -549,6 +552,16 @@ public class EditText extends android.widget.EditText {
 		}
 
 		@Override
+		public boolean commitText(CharSequence text, int newCursorPosition) {
+			//WorkAround for Samsung/HTC keyboard
+			try {
+				return super.commitText(text, newCursorPosition);
+			} catch (IndexOutOfBoundsException e) {
+				return true;
+			}
+		}
+
+		@Override
 		public boolean sendKeyEvent(KeyEvent event) {
 			mKeyEvent = event;
 
@@ -567,16 +580,7 @@ public class EditText extends android.widget.EditText {
 						listener.deleteKeyboardButton(getEdittext(), false);
 					}
 				}
-			} else {
-				/*if (listener!= null && event.getAction() == KeyEvent.ACTION_UP) {
-						Log.e("EditText","addNewChar"+event);
-						listener.addNewChar(getEdittext());
-					}*/
 			}
-			/*}else{
-				Log.e("EditText","not old method");
-			}*/
-
 			return super.sendKeyEvent(event);
 		}
 
@@ -688,5 +692,17 @@ public class EditText extends android.widget.EditText {
 
 	public void setAutoFocus(boolean mAutoFocus) {
 		this.mAutoFocus = mAutoFocus;
+	}
+
+	public boolean isCustomPassWordTransformation() {
+		return mCustomPassWordTransformation;
+	}
+
+	public void setCustomPassWordTransformation(
+			boolean mCustomPassWordTransformation) {
+		this.mCustomPassWordTransformation = mCustomPassWordTransformation;
+		if(this.mCustomPassWordTransformation){
+			this.setTransformationMethod(new CustomPasswordTransformationMethod());
+		}
 	}
 }
