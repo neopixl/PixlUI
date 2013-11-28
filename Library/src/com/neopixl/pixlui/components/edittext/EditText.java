@@ -565,8 +565,6 @@ public class EditText extends android.widget.EditText {
 		public boolean sendKeyEvent(KeyEvent event) {
 			mKeyEvent = event;
 
-			//if (getEdittext().isOldDeviceKeyboard()) {
-
 			EditTextBatchListener listener = getEdittext()
 					.getBatchListener();
 
