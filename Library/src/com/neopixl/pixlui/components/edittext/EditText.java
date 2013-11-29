@@ -20,6 +20,7 @@ package com.neopixl.pixlui.components.edittext;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Paint;
@@ -40,6 +41,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputConnectionWrapper;
@@ -388,7 +390,16 @@ public class EditText extends android.widget.EditText {
 	 */
 	public void showKeyboard() {
 		this.requestFocus();
-		mImm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT | InputMethodManager.SHOW_FORCED);
+		
+
+		Context context = getContext();
+		if(Activity.class.isInstance(context)) {
+			((Activity)context).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+		}
+		else {
+	        mImm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT | InputMethodManager.SHOW_FORCED);
+		}
+		
 		// Trick used to create a fake touch event on the editText
 		MotionEvent event = MotionEvent.obtain(0, SystemClock.uptimeMillis(),
 				MotionEvent.ACTION_DOWN | MotionEvent.ACTION_UP, this.getMeasuredWidth(), 0, 0);
@@ -400,8 +411,16 @@ public class EditText extends android.widget.EditText {
 	 * Force hide keyboard
 	 */
 	public void hideKeyboard() {
-		this.clearFocus();
-		mImm.hideSoftInputFromWindow(this.getWindowToken(), 0);
+		this.clearFocus();		
+		
+		Context context = getContext();
+		if(Activity.class.isInstance(context)) {
+			((Activity)context).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		}
+		else {
+	        mImm.hideSoftInputFromWindow(this.getWindowToken(), 0);
+		}
+		
 	}
 
 	/**
