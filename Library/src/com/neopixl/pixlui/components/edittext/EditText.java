@@ -31,7 +31,6 @@ import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.ActionMode.Callback;
 import android.view.ContextMenu;
@@ -375,10 +374,8 @@ public class EditText extends android.widget.EditText {
 
 		if(mAutoFocus){
 			if(focused){
-				Log.e("EDITTEXT","showSoftInput");
 				mImm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT | InputMethodManager.SHOW_FORCED);
 			}else{
-				Log.e("EDITTEXT","hideSoftInputFromWindow");
 				mImm.hideSoftInputFromWindow(this.getWindowToken(), 0);
 			}
 			mImm.toggleSoftInput(0, 0);
