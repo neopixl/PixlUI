@@ -387,16 +387,16 @@ public class EditText extends android.widget.EditText {
 	 */
 	public void showKeyboard() {
 		this.requestFocus();
-		
+
 
 		Context context = getContext();
 		if(Activity.class.isInstance(context)) {
 			((Activity)context).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 		}
-		else {
-	        mImm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT | InputMethodManager.SHOW_FORCED);
-		}
-		
+
+		mImm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT | InputMethodManager.SHOW_FORCED);
+		mImm.toggleSoftInput(0, 0);
+
 		// Trick used to create a fake touch event on the editText
 		MotionEvent event = MotionEvent.obtain(0, SystemClock.uptimeMillis(),
 				MotionEvent.ACTION_DOWN | MotionEvent.ACTION_UP, this.getMeasuredWidth(), 0, 0);
@@ -409,15 +409,13 @@ public class EditText extends android.widget.EditText {
 	 */
 	public void hideKeyboard() {
 		this.clearFocus();		
-		
+
 		Context context = getContext();
 		if(Activity.class.isInstance(context)) {
 			((Activity)context).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		}
-		else {
-	        mImm.hideSoftInputFromWindow(this.getWindowToken(), 0);
-		}
-		
+		mImm.hideSoftInputFromWindow(this.getWindowToken(), 0);
+		mImm.toggleSoftInput(0, 0);
 	}
 
 	/**
