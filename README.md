@@ -4,6 +4,10 @@
 Provide few methods for visual elements.
 
 
+CheckBox:
+- Custom font
+- Text All caps (works on all API version)
+
 Button:
 - Custom font
 - Text All caps (works on all API version)
