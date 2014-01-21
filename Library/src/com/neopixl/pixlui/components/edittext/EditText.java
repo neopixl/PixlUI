@@ -75,6 +75,10 @@ public class EditText extends android.widget.EditText {
 	private static final String EDITTEXT_KEYBOARD_OLD_SAMSUNG = "com.sec.android.inputmethod.axt9/.AxT9IME";
 	private static final String EDITTEXT_KEYBOARD_SAMSUNG = "com.sec.android.inputmethod/.SamsungKeypad";
 	private static final String EDITTEXT_KEYBOARD_LG = "com.lge.ime/.LgeImeImpl";
+	private static final String EDITTEXT_KEYBOARD_SWIFTKEY_TRIAL = "com.touchtype.swiftkey.phone.trial/com.touchtype.KeyboardService";
+	private static final String EDITTEXT_KEYBOARD_SWYPE_DRAGON = "com.nuance.swype.trial/com.nuance.swype.input.IME";
+	private static final String EDITTEXT_KEYBOARD_SWIFTKEY = "com.touchtype.swiftkey/com.touchtype.KeyboardService";
+
 
 	/**
 	 * Listeners
@@ -394,8 +398,8 @@ public class EditText extends android.widget.EditText {
 			((Activity)context).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 		}
 
-		mImm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT | InputMethodManager.SHOW_FORCED);
-		mImm.toggleSoftInput(0, 0);
+		//mImm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT | InputMethodManager.SHOW_FORCED);
+		//mImm.toggleSoftInput(0, 0);
 
 		// Trick used to create a fake touch event on the editText
 		MotionEvent event = MotionEvent.obtain(0, SystemClock.uptimeMillis(),
@@ -414,8 +418,8 @@ public class EditText extends android.widget.EditText {
 		if(Activity.class.isInstance(context)) {
 			((Activity)context).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		}
-		mImm.hideSoftInputFromWindow(this.getWindowToken(), 0);
-		mImm.toggleSoftInput(0, 0);
+		//mImm.hideSoftInputFromWindow(this.getWindowToken(), 0);
+		//mImm.toggleSoftInput(0, 0);
 	}
 
 	/**
@@ -437,6 +441,45 @@ public class EditText extends android.widget.EditText {
 	 */
 	public boolean isASenseKeyboard() {
 		if (getKeyboardName().equals(EDITTEXT_KEYBOARD_SENSE)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Return if cellphone use a Swype + Dragon
+	 * 
+	 * @return
+	 */
+	public boolean isASwypeDragonKeyboard() {
+		if (getKeyboardName().equals(EDITTEXT_KEYBOARD_SWYPE_DRAGON)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Return if cellphone use a SwiftKeyTrial
+	 * 
+	 * @return
+	 */
+	public boolean isASwiftKeyTrialKeyboard() {
+		if (getKeyboardName().equals(EDITTEXT_KEYBOARD_SWIFTKEY_TRIAL)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Return if cellphone use a SwiftKey
+	 * 
+	 * @return
+	 */
+	public boolean isASwiftKeyKeyboard() {
+		if (getKeyboardName().equals(EDITTEXT_KEYBOARD_SWIFTKEY)) {
 			return true;
 		} else {
 			return false;

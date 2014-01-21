@@ -58,36 +58,6 @@ PasswordTransformationMethod {
 };
 /*
 0 value:��
-1 value:
-2 value:
-3 value:
-4 value:
-5 value:
-6 value:
-7 value:
-8 value:
-9 value:	
-10 value:
-11 value:12 value:13 value:
-14 value:
-15 value:
-16 value:
-17 value:
-18 value:
-19 value:
-20 value:
-21 value:
-22 value:
-23 value:
-24 value:
-25 value:
-26 value:
-27 value:
-28 value:
-29 value:
-30 value:
-31 value:
-32 value: 
 33 value:!
 34 value:"
 35 value:#
@@ -182,39 +152,6 @@ PasswordTransformationMethod {
 124 value:|
 125 value:}
 126 value:~
-127 value:
-128 value:
-129 value:
-130 value:
-131 value:
-132 value:
-133 value:134 value:
-135 value:
-136 value:
-137 value:
-138 value:
-139 value:
-140 value:
-141 value:
-142 value:
-143 value:
-144 value:
-145 value:
-146 value:
-147 value:
-148 value:
-149 value:
-150 value:
-151 value:
-152 value:
-153 value:
-154 value:
-155 value:
-156 value:
-157 value:
-158 value:
-159 value:
-160 value: 
 161 value:¡
 162 value:¢
 163 value:£
