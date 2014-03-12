@@ -20,6 +20,14 @@ EditText:
 - Focus listener
 - Batch listener (replace TextWatcher, wich that you can intercept DEL touch on all API)
 
+AutoCompleteEditText:
+- Custom font
+- Copy/Cut/Paste (enable/disable) (works on all API version)
+- Cancel clipboard content (works on all API version)
+- Text All caps (works on all API version) - (in progress)
+- Focus listener
+- Batch listener (replace TextWatcher, wich that you can intercept DEL touch on all API)
+
 Image View:
 - Alpha  (works on all API version)
 
