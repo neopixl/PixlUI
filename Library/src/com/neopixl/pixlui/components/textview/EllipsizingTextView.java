@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -58,20 +59,51 @@ public class EllipsizingTextView extends TextView {
 
 	private float lineSpacingMultiplier = 1.0f;
 	private float lineAdditionalVerticalPadding = 0.0f;
+	
+	private boolean canBeEllipsized = false;
 
 	private Pattern endPunctuationPattern;
 
 	public EllipsizingTextView(Context context) {
 		this(context, null);
 	}
+	
+	public EllipsizingTextView(Context context, boolean canBeEllipsized) {
+		this(context, null);
+		setCanBeEllipsized(canBeEllipsized);
+	}
 
 	public EllipsizingTextView(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
 	}
+	
+	public EllipsizingTextView(Context context, AttributeSet attrs, boolean canBeEllipsized) {
+		this(context, attrs, 0);
+		setCanBeEllipsized(canBeEllipsized);
+	}
 
+	@SuppressLint("Recycle")
 	public EllipsizingTextView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		super.setEllipsize(null);
+		
+		if(canBeEllipsized){
+			super.setEllipsize(null);
+			initialize(context, attrs);
+		}
+	}
+	
+	public EllipsizingTextView(Context context, AttributeSet attrs, int defStyle, boolean canBeEllipsized) {
+		super(context, attrs, defStyle);
+		setCanBeEllipsized(canBeEllipsized);
+		
+		if(canBeEllipsized){
+			super.setEllipsize(null);
+			initialize(context, attrs);
+		}
+	}
+	
+	@SuppressLint("Recycle")
+	private void initialize(Context context, AttributeSet attrs) {
 		TypedArray a = context.obtainStyledAttributes(attrs, new int[] { android.R.attr.maxLines });
 		setMaxLines(a.getInt(0, Integer.MAX_VALUE));
 		setEndPunctuationPattern(TEXTVIEW_ELLIPSIZING_DEFAULT_END_PUNCTUATION);
@@ -122,7 +154,7 @@ public class EllipsizingTextView extends TextView {
 	protected void onTextChanged(CharSequence text, int start, int before,
 			int after) {
 		super.onTextChanged(text, start, before, after);
-		if (!programmaticChange) {
+		if (!programmaticChange && canBeEllipsized) {
 			fullText = text.toString();
 			isStale = true;
 		}
@@ -131,21 +163,21 @@ public class EllipsizingTextView extends TextView {
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
-		if (ellipsizingLastFullyVisibleLine()) {
+		if (ellipsizingLastFullyVisibleLine() && canBeEllipsized) {
 			isStale = true;
 		}
 	}
 
 	public void setPadding(int left, int top, int right, int bottom) {
 		super.setPadding(left, top, right, bottom);
-		if (ellipsizingLastFullyVisibleLine()) {
+		if (ellipsizingLastFullyVisibleLine() && canBeEllipsized) {
 			isStale = true;
 		}
 	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		if (isStale) {
+		if (isStale && canBeEllipsized) {
 			resetText();
 		}
 		super.onDraw(canvas);
@@ -222,5 +254,13 @@ public class EllipsizingTextView extends TextView {
 	@Override
 	public void setEllipsize(TruncateAt where) {
 		// Ellipsize settings are not respected
+	}
+
+	public boolean isCanBeEllipsized() {
+		return canBeEllipsized;
+	}
+
+	public void setCanBeEllipsized(boolean canBeEllipsized) {
+		this.canBeEllipsized = canBeEllipsized;
 	}
 }

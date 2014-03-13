@@ -4,5 +4,6 @@
     <string name="app_name">PixlUISample</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello pixl!</string>
+    <string name="big_hello_world">Hello pixl! Hello pixl! Hello pixl! Hello pixl!</string>
 
 </resources>

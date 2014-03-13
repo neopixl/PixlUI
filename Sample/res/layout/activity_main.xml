@@ -53,4 +53,14 @@
             pixlui:copyandpaste="false"
             pixlui:typeface="Oswald_Regular.ttf" />
 
+        <com.neopixl.pixlui.components.textview.AutoResizeTextView
+            android:id="@+id/TextView01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/editText1"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/button1"
+            android:text="@string/big_hello_world"
+            pixlui:typeface="GearedSlab.ttf" />
+
 </RelativeLayout>

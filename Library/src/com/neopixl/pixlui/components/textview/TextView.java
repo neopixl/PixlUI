@@ -45,12 +45,12 @@ public class TextView extends EllipsizingTextView {
 	private boolean mOldDeviceTextAllCaps;
 
 	public TextView(Context context) {
-		super(context);
+		super(context,false);
 		editTextVersion();
 	}
 
 	public TextView(Context context, AttributeSet attrs) {
-		super(context, attrs);
+		super(context, attrs,false);
 		editTextVersion();
 		setCustomFont(context, attrs);
 		if (isOldDeviceTextAllCaps()) {
@@ -59,7 +59,30 @@ public class TextView extends EllipsizingTextView {
 	}
 
 	public TextView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
+		super(context, attrs, defStyle,false);
+		editTextVersion();
+		setCustomFont(context, attrs);
+		if (isOldDeviceTextAllCaps()) {
+			setAllCaps(context, attrs);
+		}
+	}
+
+	public TextView(Context context, boolean canBeEllipsized) {
+		super(context,canBeEllipsized);
+		editTextVersion();
+	}
+
+	public TextView(Context context, AttributeSet attrs, boolean canBeEllipsized) {
+		super(context, attrs,canBeEllipsized);
+		editTextVersion();
+		setCustomFont(context, attrs);
+		if (isOldDeviceTextAllCaps()) {
+			setAllCaps(context, attrs);
+		}
+	}
+
+	public TextView(Context context, AttributeSet attrs, int defStyle, boolean canBeEllipsized) {
+		super(context, attrs, defStyle,canBeEllipsized);
 		editTextVersion();
 		setCustomFont(context, attrs);
 		if (isOldDeviceTextAllCaps()) {
