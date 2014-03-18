@@ -57,7 +57,7 @@ import com.neopixl.pixlui.intern.PixlUIContants;
  * 
  * @author Olivier Demolliens. @odemolliens Dev with Neopixl
  */
-public class AutoCompleteEditText extends android.widget.EditText {
+public class AutoCompleteEditText extends android.widget.AutoCompleteTextView {
 
 	/**
 	 * XML Attribute
