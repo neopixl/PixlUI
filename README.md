@@ -82,7 +82,7 @@ How use it ?
 ![MeeTincS](https://lh5.ggpht.com/WQcf8Msp7dFfpyAQNvYV_WNaA9GdR9G7-gLRrFwMgPuDTwKaU72YdTMwXXSxNkdvjA=w100)
 ![Wort.lu](https://lh4.ggpht.com/8d3m3aWSKpP6bqZefw5oF256Sgk9X_vxxh4VQ9LXqgvCz6HuyOYsQu4VmAXuDF4deZQ=w100)
 
-[W-Zup](https://play.google.com/store/apps/details?id=com.wzup.wzup)   -    [FLASHiZ](https://play.google.com/store/apps/details?id=com.mobey.android)   -   [MeeTincS](https://play.google.com/store/apps/details?id=com.neopixl.apppixl.meetincs)   -   [Wort.lu](https://play.google.com/store/apps/details?id=lu.wort.main)
+[W-Zup](https://play.google.com/store/apps/details?id=com.wzup.wzup)  	-       [FLASHiZ](https://play.google.com/store/apps/details?id=com.mobey.android)      -       [MeeTincS](https://play.google.com/store/apps/details?id=com.neopixl.apppixl.meetincs)      -       [Wort.lu](https://play.google.com/store/apps/details?id=lu.wort.main)
 
 
 
