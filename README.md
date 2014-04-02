@@ -103,8 +103,6 @@ How use it ?
 - Added custom Button (*Custom font*)
 - Fix many crash
 
----
-
 ![Logo](https://raw.github.com/neopixl/PixlUI/master/Sample/res/drawable-xhdpi/small.png ) Application using PixlUI
 ======
 
