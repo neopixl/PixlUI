@@ -71,7 +71,37 @@ How use it ?
 ```
 
 ![Logo](https://raw.github.com/neopixl/PixlUI/master/Sample/res/drawable-xhdpi/small.png ) ChangeLog
-======
+===
+
+**1.0.4**
+
+- Added RelativeLayoutAnimator (*VISIBLE/GONE/INVISIBLE transition animation*)
+- Added LinearLayoutAnimator (*VISIBLE/GONE/INVISIBLE transition animation*)
+- Added custom AutoCompleteEditText
+- Added custom AutoResizeTextView (**in progress**)
+
+**1.0.3**
+
+- Added custom CheckBox (*Custom font, Text all caps*)
+ 
+**1.0.2**
+
+- Added method in custom EditText (*Autofocus Listener, Hide/Show Keyboard*)
+ 
+**1.0.1**
+
+- Added method in custom TextView (*Text all caps*) - for old api version
+- Added method in custom EditText (*Text all caps*) - for old api version
+- Added method in custom Button (*Text all caps*) - for old api version
+- Fix NPE in Batch Listener
+- Added custom RelativeLayout (*Alpha*) - for old api version
+
+**1.0.0**
+
+- Added custom TextView (*Custom font*)
+- Added custom EditText (*Custom font, Focus Listener, Batch Listener*)
+- Added custom Button (*Custom font*)
+- Fix many crash
 
 ---
 
