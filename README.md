@@ -48,7 +48,7 @@ Screenshot
 How use it ?
 ==========
 
-1 . Import [pixlui.jar](https://github.com/neopixl/PixlUI/raw/master/Sample/libs/pixlui.jar "pixlui.jar") in your project.
+1 . Import [pixlui.jar](https://github.com/neopixl/PixlUI/releases "pixlui.jar") in your project.
 
 2 . Add your custom fonts in /assets/fonts/
 
@@ -122,7 +122,7 @@ Copyright
 ==========
 
 
-  	Copyright 2014 Neopixl
+  	Copyright 2014 Neopixl - Olivier Demolliens
 
 	Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
 	
