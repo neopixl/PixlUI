@@ -73,6 +73,10 @@ How use it ?
 ![Logo](https://raw.github.com/neopixl/PixlUI/master/Sample/res/drawable-xhdpi/small.png ) ChangeLog
 ===
 
+**1.0.5**
+
+- Added custom RadioButton (*Custom font, Text all caps*)
+
 **1.0.4**
 
 - Added RelativeLayoutAnimator (*VISIBLE/GONE/INVISIBLE transition animation*)
