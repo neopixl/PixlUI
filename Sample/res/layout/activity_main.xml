@@ -63,4 +63,27 @@
             android:text="@string/big_hello_world"
             pixlui:typeface="GearedSlab.ttf" />
 
+           <RadioGroup
+               android:id="@+id/radioGroup"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_above="@+id/editText5"
+               android:layout_alignLeft="@+id/button1"
+               android:layout_marginBottom="17dp" >
+
+               <com.neopixl.pixlui.components.radiobutton.RadioButton
+                   android:id="@+id/radioB1"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:checked="true"
+                   android:text="@string/hello_world" />
+
+               <com.neopixl.pixlui.components.radiobutton.RadioButton
+                   android:id="@+id/radioB2"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="@string/hello_world"
+                   pixlui:typeface="GearedSlab.ttf" />
+           </RadioGroup>
+           
 </RelativeLayout>
