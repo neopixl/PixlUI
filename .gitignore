@@ -1,4 +1,4 @@
-Library.iml
 Library/build
+*.iml
 *.class
 local.properties
