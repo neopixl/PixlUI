@@ -1,0 +1,17 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.13.2'
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+
+    group 'com.neopixl.pixlui'
+    version = '0.0.1'
+}

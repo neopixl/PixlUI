@@ -1,0 +1,48 @@
+apply plugin: 'maven'
+
+allprojects {
+    repositories {
+        maven {
+            url "${nextfazeArtifactoryUrl}/libs-release"
+            credentials {
+                username nextfazeArtifactoryUser
+                password nextfazeArtifactoryPassword
+            }
+        }
+    }
+}
+
+allprojects {
+    project.ext {
+        release = true
+    }
+}
+
+project.ext.getDeployVersion = {
+    return project.ext.release ? project.version : project.version + '-SNAPSHOT';
+}
+
+project.ext.getUrl = {
+    return project.ext.release ?
+            "${nextfazeArtifactoryUrl}/libs-release-local/" :
+            "${nextfazeArtifactoryUrl}/libs-snapshot-local/";
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: project.ext.getUrl()) {
+                authentication(userName: "${nextfazeArtifactoryUser}", password: "${nextfazeArtifactoryPassword}")
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs, android.sourceSets.main.res.srcDirs
+}
+
+artifacts {
+    archives sourcesJar
+}
