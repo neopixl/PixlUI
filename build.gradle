@@ -1,9 +1,13 @@
+ext {
+    buildToolsVersion = '21.1.1'
+}
+
 buildscript {
     repositories {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.13.2'
+        classpath 'com.android.tools.build:gradle:1.0.1'
     }
 }
 
@@ -13,5 +17,5 @@ allprojects {
     }
 
     group 'com.neopixl.pixlui'
-    version = '0.0.1'
+    version = '0.0.2'
 }

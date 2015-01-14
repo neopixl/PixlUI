@@ -1,4 +1,4 @@
-Library/build
+build/
 *.iml
 *.class
 .gradle

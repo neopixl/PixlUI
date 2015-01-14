@@ -1,5 +1,9 @@
-apply plugin: 'com.android.library'
-apply from: 'nextfaze.gradle'
+apply plugin: 'com.android.application'
+
+
+dependencies {
+    compile project(':Library')
+}
 
 android {
     compileSdkVersion 21

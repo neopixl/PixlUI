@@ -1,2 +1,2 @@
 rootProject.name = 'PixlUI'
-include ':Library'
+include ':Library', ':Sample'

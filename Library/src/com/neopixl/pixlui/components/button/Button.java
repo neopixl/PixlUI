@@ -1,14 +1,12 @@
 package com.neopixl.pixlui.components.button;
 
 import android.content.Context;
-import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 
 import com.neopixl.pixlui.R;
 import com.neopixl.pixlui.components.textview.FontFactory;
 import com.neopixl.pixlui.intern.FontStyleView;
-import com.neopixl.pixlui.intern.PixlUIConstants;
 import com.neopixl.pixlui.intern.PixlUIUtils;
 
 public class Button extends android.widget.Button implements FontStyleView {

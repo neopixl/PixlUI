@@ -1,5 +1,5 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:pixlui="http://schemas.android.com/apk/com.neopixl.pixlui"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,34 +7,36 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context=".MainActivity" >
 
     <com.neopixl.pixlui.components.textview.TextView
-        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world"
-        pixlui:typeface="GearedSlab.ttf" />
+        android:text="I am a TextView with font GearedSlab"
+        app:typeface="GearedSlab.ttf" />
+
+    <com.neopixl.pixlui.components.textview.TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="I am a TextView with font Oswald_Regular"
+        app:typeface="Oswald_Regular.ttf" />
 
     <com.neopixl.pixlui.components.edittext.EditText
         android:id="@+id/editText1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:text="@string/hello_world"
-        pixlui:typeface="Oswald_Regular.ttf" />
+        app:typeface="Oswald_Regular.ttf" />
 
     <com.neopixl.pixlui.components.button.Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText1"
-        android:layout_below="@+id/editText1"
-        android:layout_marginTop="38dp"
+        android:layout_marginTop="16dp"
         android:text="@string/hello_world"
-        pixlui:typeface="Oswald_Regular.ttf" />
+        app:typeface="GearedSlab.ttf" />
 
-</RelativeLayout>
+</LinearLayout>
