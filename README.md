@@ -3,6 +3,7 @@
 
 Provide few methods for visual elements.
 
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-PixlUI-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/166)
 
 CheckBox:
 - Custom font
