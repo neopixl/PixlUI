@@ -45,6 +45,24 @@ Screenshot
 ==========
 ![Screen1](https://raw.github.com/neopixl/PixlUI/master/screenshot.png )
 
+Gradle Setup
+==========
+Compile with one line easy code!
+```gradle
+
+repositories {
+    maven {
+        url "https://jitpack.io"
+    }
+}
+
+```
+Compile in the build.gradle file. for X.X.X please refer to the change log.
+```gradle
+dependanies{
+  compile 'com.github.neopixl:PixlUI:vX.X.X.'
+}
+  ```
 
 How use it ?
 ==========
