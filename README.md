@@ -63,6 +63,26 @@ dependencies{
   compile 'com.github.neopixl:PixlUI:vX.X.X.'
 }
   ```
+  
+  Maven Setup
+==========
+
+Add Repository
+```xml
+<repository>
+	    <id>jitpack.io</id>
+	    <url>https://jitpack.io</url>
+	</repository>
+
+```
+Add Dependency:
+```xml
+	<dependency>
+	    <groupId>com.github.neopixl</groupId>
+	    <artifactId>PixlUI</artifactId>
+	    <version>v1.0.5</version>
+	</dependency>
+  ```
 
 How use it ?
 ==========
