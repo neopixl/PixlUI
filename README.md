@@ -59,7 +59,7 @@ repositories {
 ```
 Compile in the build.gradle file. for X.X.X please refer to the change log.
 ```gradle
-dependanies{
+dependencies{
   compile 'com.github.neopixl:PixlUI:vX.X.X.'
 }
   ```
