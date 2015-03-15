@@ -3,6 +3,10 @@
 
 Provide few methods for visual elements.
 
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-PixlUI-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/166)
+[![JitPackGradle](https://img.shields.io/github/tag/neopixl/PixlUI.svg?label=maven)](https://jitpack.io/#neopixl/PixlUI/)
+[![JitPackMaven](https://img.shields.io/github/tag/neopixl/PixlUI.svg?label=gradle)](https://jitpack.io/#neopixl/PixlUI/)
+
 
 CheckBox:
 - Custom font
@@ -44,6 +48,44 @@ Screenshot
 ==========
 ![Screen1](https://raw.github.com/neopixl/PixlUI/master/screenshot.png )
 
+Gradle Setup
+==========
+Compile with one line easy code!
+```gradle
+
+repositories {
+    maven {
+        url "https://jitpack.io"
+    }
+}
+
+```
+Compile in the build.gradle file. for X.X.X please refer to the change log.
+```gradle
+dependencies{
+  compile 'com.github.neopixl:PixlUI:vX.X.X.'
+}
+  ```
+  
+  Maven Setup
+==========
+
+Add Repository
+```xml
+<repository>
+	    <id>jitpack.io</id>
+	    <url>https://jitpack.io</url>
+	</repository>
+
+```
+Add Dependency:
+```xml
+	<dependency>
+	    <groupId>com.github.neopixl</groupId>
+	    <artifactId>PixlUI</artifactId>
+	    <version>v1.0.5</version>
+	</dependency>
+  ```
 
 How use it ?
 ==========
