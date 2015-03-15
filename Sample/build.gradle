@@ -8,7 +8,6 @@ dependencies {
 android {
     compileSdkVersion 19
     buildToolsVersion = rootProject.ext.buildToolsVersion
-
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -20,9 +19,9 @@ android {
             assets.srcDirs = ['assets']
         }
     }
-
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 19
     }
+    buildToolsVersion '19.1.0'
 }

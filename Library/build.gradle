@@ -1,9 +1,7 @@
 apply plugin: 'com.android.library'
-
 android {
     compileSdkVersion 19
     buildToolsVersion = rootProject.ext.buildToolsVersion
-
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -16,8 +14,31 @@ android {
         }
     }
 
-    defaultConfig {
-        minSdkVersion 8
-        targetSdkVersion 19
+
+    android.libraryVariants.all { variant ->
+        task("generate${variant.name}Javadoc", type: Javadoc) {
+            description "Generates Javadoc for $variant.name."
+            source = variant.javaCompile.source
+            ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+            classpath = files(variant.javaCompile.classpath.files) + files(ext.androidJar)
+        }
+
+        task("javadoc${variant.name}", type: Jar) {
+            classifier = "javadoc"
+            description "Bundles Javadoc into a JAR file for $variant.name."
+            from tasks["generate${variant.name}Javadoc"]
+
+        }
+
+        task("jar${variant.name}", type: Jar) {
+            description "Bundles compiled .class files into a JAR file for $variant.name."
+            dependsOn variant.javaCompile
+            from variant.javaCompile.destinationDir
+            exclude '**/R.class', '**/R$*.class', '**/R.html', '**/R.*.html'
+        }
     }
+
+}
+
+dependencies {
 }
