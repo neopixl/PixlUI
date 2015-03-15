@@ -18,17 +18,17 @@ public class AutoResizeTextView extends TextView {
 
 
 	public AutoResizeTextView(Context context) {
-		super(context,true);
+		super(context);
 		initialize();
 	}
 
 	public AutoResizeTextView(Context context, AttributeSet attrs) {
-		super(context, attrs,true);
+		super(context, attrs);
 		initialize();
 	}
 	
 	public AutoResizeTextView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle,false);
+		super(context, attrs, defStyle);
 		initialize();
 	}
 

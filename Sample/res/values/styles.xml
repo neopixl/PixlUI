@@ -12,9 +12,21 @@
         -->
     </style>
 
+
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+
+    <style name="AppTheme.TextGearedSlab">
+        <item name="android:textSize">12sp</item>
+        <item name="typeface">GearedSlab.ttf</item>
+    </style>
+
+    <style name="AppTheme.TextOswaldRegular">
+        <item name="android:textSize">12sp</item>
+        <item name="typeface">Oswald_Regular.ttf</item>
+    </style>
+
 
 </resources>

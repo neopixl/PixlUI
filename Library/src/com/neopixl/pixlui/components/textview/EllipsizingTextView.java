@@ -1,27 +1,9 @@
-/*
- Copyright 2013 Neopixl - Olivier Demolliens
-
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
-
-file except in compliance with the License. You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF 
-
-ANY KIND, either express or implied. See the License for the specific language governing
-
-permissions and limitations under the License.
- */
 package com.neopixl.pixlui.components.textview;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -32,81 +14,41 @@ import android.text.TextUtils.TruncateAt;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-/**
- * Better ellipsizing for TextView
- * @author Olivier Demolliens. @odemolliens
- * Dev with Neopixl
- */
-
 public class EllipsizingTextView extends TextView {
-
-	private static final String TEXTVIEW_ELLIPSIZING_ELLIPSIS = "\u2026";
-	private static final Pattern TEXTVIEW_ELLIPSIZING_DEFAULT_END_PUNCTUATION = Pattern.compile("[\\.,\u2026;:\\s]*$", Pattern.DOTALL);
+	private static final String ELLIPSIS = "\u2026";
+	private static final Pattern DEFAULT_END_PUNCTUATION = Pattern.compile("[\\.,\u2026;:\\s]*$", Pattern.DOTALL);
 
 	public interface EllipsizeListener {
 		void ellipsizeStateChanged(boolean ellipsized);
 	}
 
 	private final List<EllipsizeListener> ellipsizeListeners = new ArrayList<EllipsizeListener>();
-
 	private boolean isEllipsized;
 	private boolean isStale;
 	private boolean programmaticChange;
-
 	private String fullText;
-
 	private int maxLines;
-
 	private float lineSpacingMultiplier = 1.0f;
 	private float lineAdditionalVerticalPadding = 0.0f;
-	
-	private boolean canBeEllipsized = false;
-
+	/**
+	 * The end punctuation which will be removed when appending #ELLIPSIS.
+	 */
 	private Pattern endPunctuationPattern;
 
 	public EllipsizingTextView(Context context) {
 		this(context, null);
 	}
-	
-	public EllipsizingTextView(Context context, boolean canBeEllipsized) {
-		this(context, null);
-		setCanBeEllipsized(canBeEllipsized);
-	}
 
 	public EllipsizingTextView(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
 	}
-	
-	public EllipsizingTextView(Context context, AttributeSet attrs, boolean canBeEllipsized) {
-		this(context, attrs, 0);
-		setCanBeEllipsized(canBeEllipsized);
-	}
 
-	@SuppressLint("Recycle")
 	public EllipsizingTextView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		
-		if(canBeEllipsized){
-			super.setEllipsize(null);
-			initialize(context, attrs);
-		}
-	}
-	
-	public EllipsizingTextView(Context context, AttributeSet attrs, int defStyle, boolean canBeEllipsized) {
-		super(context, attrs, defStyle);
-		setCanBeEllipsized(canBeEllipsized);
-		
-		if(canBeEllipsized){
-			super.setEllipsize(null);
-			initialize(context, attrs);
-		}
-	}
-	
-	@SuppressLint("Recycle")
-	private void initialize(Context context, AttributeSet attrs) {
+		super.setEllipsize(null);
 		TypedArray a = context.obtainStyledAttributes(attrs, new int[] { android.R.attr.maxLines });
 		setMaxLines(a.getInt(0, Integer.MAX_VALUE));
-		setEndPunctuationPattern(TEXTVIEW_ELLIPSIZING_DEFAULT_END_PUNCTUATION);
+		setEndPunctuationPattern(DEFAULT_END_PUNCTUATION);
 	}
 
 	public void setEndPunctuationPattern(Pattern pattern) {
@@ -154,7 +96,7 @@ public class EllipsizingTextView extends TextView {
 	protected void onTextChanged(CharSequence text, int start, int before,
 			int after) {
 		super.onTextChanged(text, start, before, after);
-		if (!programmaticChange && canBeEllipsized) {
+		if (!programmaticChange) {
 			fullText = text.toString();
 			isStale = true;
 		}
@@ -163,21 +105,21 @@ public class EllipsizingTextView extends TextView {
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
-		if (ellipsizingLastFullyVisibleLine() && canBeEllipsized) {
+		if (ellipsizingLastFullyVisibleLine()) {
 			isStale = true;
 		}
 	}
 
 	public void setPadding(int left, int top, int right, int bottom) {
 		super.setPadding(left, top, right, bottom);
-		if (ellipsizingLastFullyVisibleLine() && canBeEllipsized) {
+		if (ellipsizingLastFullyVisibleLine()) {
 			isStale = true;
 		}
 	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		if (isStale && canBeEllipsized) {
+		if (isStale) {
 			resetText();
 		}
 		super.onDraw(canvas);
@@ -189,16 +131,18 @@ public class EllipsizingTextView extends TextView {
 		Layout layout = createWorkingLayout(workingText);
 		int linesCount = getLinesCount();
 		if (layout.getLineCount() > linesCount) {
+			// We have more lines of text than we are allowed to display.
 			workingText = fullText.substring(0, layout.getLineEnd(linesCount - 1)).trim();
-			while (createWorkingLayout(workingText + TEXTVIEW_ELLIPSIZING_ELLIPSIS).getLineCount() > linesCount) {
+			while (createWorkingLayout(workingText + ELLIPSIS).getLineCount() > linesCount) {
 				int lastSpace = workingText.lastIndexOf(' ');
 				if (lastSpace == -1) {
 					break;
 				}
 				workingText = workingText.substring(0, lastSpace);
 			}
+			// We should do this in the loop above, but it's cheaper this way.
 			workingText = endPunctuationPattern.matcher(workingText).replaceFirst("");
-			workingText = workingText + TEXTVIEW_ELLIPSIZING_ELLIPSIS;
+			workingText = workingText + ELLIPSIS;
 			ellipsized = true;
 		}
 		if (!workingText.equals(getText())) {
@@ -254,13 +198,5 @@ public class EllipsizingTextView extends TextView {
 	@Override
 	public void setEllipsize(TruncateAt where) {
 		// Ellipsize settings are not respected
-	}
-
-	public boolean isCanBeEllipsized() {
-		return canBeEllipsized;
-	}
-
-	public void setCanBeEllipsized(boolean canBeEllipsized) {
-		this.canBeEllipsized = canBeEllipsized;
 	}
 }

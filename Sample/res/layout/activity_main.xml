@@ -1,89 +1,47 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:pixlui="http://schemas.android.com/apk/com.neopixl.pixlui"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity">
 
     <com.neopixl.pixlui.components.textview.TextView
-        android:id="@+id/textView1"
+        style="@style/AppTheme.TextGearedSlab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world"
-        pixlui:typeface="GearedSlab.ttf" />
+        android:text="I am a TextView with font GearedSlab" />
+    <!-- pixlui:typeface="GearedSlab.ttf"-->
+
+
+    <com.neopixl.pixlui.components.textview.TextView
+        style="@style/AppTheme.TextOswaldRegular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="I am a TextView with font Oswald_Regular" />
+    <!-- pixlui:typeface="Oswald_Regular.ttf"-->
 
     <com.neopixl.pixlui.components.edittext.EditText
         android:id="@+id/editText1"
+        style="@style/AppTheme.TextOswaldRegular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
-        android:text="@string/hello_world"
-        pixlui:copyandpaste="false"
-        pixlui:clearclipboardcontent="true"
-        pixlui:typeface="Oswald_Regular.ttf" />
-    
+        android:text="@string/hello_world" />
+    <!-- pixlui:typeface="Oswald_Regular.ttf"-->
+
     <com.neopixl.pixlui.components.button.Button
         android:id="@+id/button1"
+        style="@style/AppTheme.TextGearedSlab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText1"
-        android:layout_below="@+id/editText1"
-        android:layout_marginTop="38dp"
-        android:text="@string/hello_world"
-        pixlui:typeface="Oswald_Regular.ttf" />
+        android:layout_marginTop="16dp"
+        android:text="@string/hello_world" />
+    <!-- pixlui:typeface="GearedSlab.ttf"-->
 
-        <com.neopixl.pixlui.components.edittext.AutoCompleteEditText
-            android:id="@+id/editText5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/button1"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="38dp"
-            android:layout_marginLeft="21dp"
-            android:ems="10"
-            android:text="@string/hello_world"
-            pixlui:clearclipboardcontent="true"
-            pixlui:copyandpaste="false"
-            pixlui:typeface="Oswald_Regular.ttf" />
-
-        <com.neopixl.pixlui.components.textview.AutoResizeTextView
-            android:id="@+id/TextView01"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/editText1"
-            android:layout_alignParentRight="true"
-            android:layout_toRightOf="@+id/button1"
-            android:text="@string/big_hello_world"
-            pixlui:typeface="GearedSlab.ttf" />
-
-           <RadioGroup
-               android:id="@+id/radioGroup"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_above="@+id/editText5"
-               android:layout_alignLeft="@+id/button1"
-               android:layout_marginBottom="17dp" >
-
-               <com.neopixl.pixlui.components.radiobutton.RadioButton
-                   android:id="@+id/radioB1"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:checked="true"
-                   android:text="@string/hello_world" />
-
-               <com.neopixl.pixlui.components.radiobutton.RadioButton
-                   android:id="@+id/radioB2"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="@string/hello_world"
-                   pixlui:typeface="GearedSlab.ttf" />
-           </RadioGroup>
-           
-</RelativeLayout>
+</LinearLayout>
