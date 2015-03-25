@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="typeface" format="string" />
+
+    <declare-styleable name="com.neopixl.pixlui.components.textview.TextView">
+        <attr name="typeface" />
+    </declare-styleable>
+
+    <declare-styleable name="com.neopixl.pixlui.components.button.Button">
+        <attr name="typeface" />
+    </declare-styleable>
+
+    <declare-styleable name="com.neopixl.pixlui.components.edittext.EditText">
+        <attr name="typeface" />
+    </declare-styleable>
+
+</resources>
