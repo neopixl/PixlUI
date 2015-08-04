@@ -67,7 +67,7 @@ dependencies{
 }
   ```
   
-  Maven Setup
+Maven Setup
 ==========
 
 Add Repository
@@ -114,6 +114,11 @@ How use it ?
 
 ![Logo](https://raw.github.com/neopixl/PixlUI/master/Sample/res/drawable-xhdpi/small.png ) ChangeLog
 ===
+
+**1.0.5a (Prerelease)**
+
+- Temp release to fix jitpack.io build
+- include a gradle'ized versin of PixlUI (now a library project)
 
 **1.0.5**
 
