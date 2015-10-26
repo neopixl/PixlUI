@@ -115,7 +115,7 @@ How use it ?
 ![Logo](https://raw.github.com/neopixl/PixlUI/master/Sample/res/drawable-xhdpi/small.png ) ChangeLog
 ===
 
-**1.0.6 **
+**1.0.6**
 - Upgraded to last build tools
 - *EllipsizingTextView* is now removed from *com.neopixl.pixlui.components.textview*
 
