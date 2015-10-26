@@ -118,7 +118,7 @@ How use it ?
     xmlns:tools="http://schemas.android.com/tools" >
 
     <com.neopixl.pixlui.components.textview.TextView
-        style="@style/AppTheme.TextOswaldRegular.t1"
+        style="@style/AppTheme.TextGearedSlab.t1"
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
