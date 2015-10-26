@@ -19,14 +19,32 @@
     </style>
 
     <style name="AppTheme.TextGearedSlab">
-        <item name="android:textSize">12sp</item>
         <item name="typeface">GearedSlab.ttf</item>
     </style>
 
-    <style name="AppTheme.TextOswaldRegular">
+
+    <style name="AppTheme.TextGearedSlab.t1">
         <item name="android:textSize">12sp</item>
+    </style>
+
+
+    <style name="AppTheme.TextGearedSlab.t2">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+
+
+    <style name="AppTheme.TextOswaldRegular">
         <item name="typeface">Oswald_Regular.ttf</item>
     </style>
 
+    <style name="AppTheme.TextOswaldRegular.t1">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+
+    <style name="AppTheme.TextOswaldRegular.t2">
+        <item name="android:textSize">14sp</item>
+    </style>
 
 </resources>

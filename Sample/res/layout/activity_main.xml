@@ -11,15 +11,14 @@
     tools:context=".MainActivity">
 
     <com.neopixl.pixlui.components.textview.TextView
-        style="@style/AppTheme.TextGearedSlab"
+        style="@style/AppTheme.TextGearedSlab.t1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="I am a TextView with font GearedSlab" />
-    <!-- pixlui:typeface="GearedSlab.ttf"-->
 
 
     <com.neopixl.pixlui.components.textview.TextView
-        style="@style/AppTheme.TextOswaldRegular"
+        style="@style/AppTheme.TextOswaldRegular.t1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="I am a TextView with font Oswald_Regular" />
@@ -27,7 +26,7 @@
 
     <com.neopixl.pixlui.components.edittext.EditText
         android:id="@+id/editText1"
-        style="@style/AppTheme.TextOswaldRegular"
+        style="@style/AppTheme.TextOswaldRegular.t2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -37,7 +36,7 @@
 
     <com.neopixl.pixlui.components.button.Button
         android:id="@+id/button1"
-        style="@style/AppTheme.TextGearedSlab"
+        style="@style/AppTheme.TextGearedSlab.t2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
