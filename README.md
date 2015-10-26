@@ -91,9 +91,7 @@ How use it ?
 ==========
 
 
-1 . Import [pixlui.jar](https://github.com/neopixl/PixlUI/releases "pixlui.jar") in your project.
-
-2 . Add your custom fonts in /assets/fonts/
+1 . Add your custom fonts in /assets/fonts/
 
 3. Define your fonts in styles.xml
 ```xml
