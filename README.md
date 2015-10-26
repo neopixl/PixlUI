@@ -91,9 +91,9 @@ How use it ?
 ==========
 
 
-1 . Add your custom fonts in /assets/fonts/
+1. Add your custom fonts in /assets/fonts/
 
-3. Define your fonts in styles.xml
+2. Define your fonts in styles.xml
 ```xml
     <style name="AppTheme.TextGearedSlab">
         <item name="typeface">GearedSlab.ttf</item>
@@ -110,7 +110,7 @@ How use it ?
     </style>
 ```
 
-4 . Use it in XML:
+3. Use it in XML:
 
 ```xml
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
