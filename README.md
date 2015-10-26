@@ -115,6 +115,10 @@ How use it ?
 ![Logo](https://raw.github.com/neopixl/PixlUI/master/Sample/res/drawable-xhdpi/small.png ) ChangeLog
 ===
 
+**1.0.6 **
+- Upgraded to last build tools
+- *EllipsizingTextView* is now removed from *com.neopixl.pixlui.components.textview*
+
 **1.0.5a (Prerelease)**
 
 - Temp release to fix jitpack.io build
@@ -165,7 +169,6 @@ How use it ?
 [Flow] (https://play.google.com/store/apps/details?id=com.metalab.flow)		-
 [W-Zup](https://play.google.com/store/apps/details?id=com.wzup.wzup)  	-       [FLASHiZ](https://play.google.com/store/apps/details?id=com.mobey.android)      -       [MeeTincS](https://play.google.com/store/apps/details?id=com.neopixl.apppixl.meetincs)      -       [Wort.lu](https://play.google.com/store/apps/details?id=lu.wort.main)     -   
 [Hypebeast](https://play.google.com/store/apps/details?id=com.hypebeast.store&hl=en)     -   
-
 
 Copyright
 ==========
