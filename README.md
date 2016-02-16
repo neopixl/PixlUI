@@ -131,9 +131,10 @@ How use it ?
 ![Logo](https://raw.github.com/neopixl/PixlUI/master/Sample/res/drawable-xhdpi/small.png ) ChangeLog
 ===
 
-**1.0.7**
+**1.1**
 
 - Android studio 1.5.1 Support
+- Android Layout Preview support
 - *CheckedTextView* added
 - *Chronometer* added
 - *ExtractEditText* added

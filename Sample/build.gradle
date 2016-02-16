@@ -6,7 +6,7 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 19
+    compileSdkVersion 23
     buildToolsVersion = rootProject.ext.buildToolsVersion
     sourceSets {
         main {
@@ -21,7 +21,7 @@ android {
     }
     defaultConfig {
         minSdkVersion 8
-        targetSdkVersion 19
+        targetSdkVersion 23
     }
-    buildToolsVersion '19.1.0'
+    buildToolsVersion '23.0.2'
 }
