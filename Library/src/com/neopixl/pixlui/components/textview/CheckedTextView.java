@@ -27,7 +27,6 @@ public class CheckedTextView extends android.widget.CheckedTextView {
     public CheckedTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        if (!isInEditMode())
             PixlUIfaceManager.applyFont(this, attrs, defStyle, context);
     }
 

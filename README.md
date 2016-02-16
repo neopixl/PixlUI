@@ -117,7 +117,7 @@ How use it ?
     xmlns:pixlui="http://schemas.android.com/apk/com.neopixl.pixlui"
     xmlns:tools="http://schemas.android.com/tools" >
 
-    <com.neopixl.pixlui.components.textview.TextView
+    <np.TextView
         style="@style/AppTheme.TextGearedSlab.t1"
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
@@ -131,7 +131,22 @@ How use it ?
 ![Logo](https://raw.github.com/neopixl/PixlUI/master/Sample/res/drawable-xhdpi/small.png ) ChangeLog
 ===
 
+**1.0.7**
+
+- Android studio 1.5.1 Support
+- *CheckedTextView* added
+- *Chronometer* added
+- *ExtractEditText* added
+- *Switch* added
+- Refactor
+- Fixed some bugs
+- Find easy accessor to our components:
+        - Before: <com.neopixl.pixlui.components.textview.TextView
+        - Now: <np.TextView
+
+
 **1.0.6**
+
 - Upgraded to last build tools
 - *EllipsizingTextView* is now removed from *com.neopixl.pixlui.components.textview*
 
@@ -190,7 +205,7 @@ Copyright
 ==========
 
 
-  	Copyright 2014 Neopixl - Olivier Demolliens
+	Copyright 2014-2016 Neopixl - Olivier Demolliens
 
 	Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
 	

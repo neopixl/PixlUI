@@ -20,8 +20,7 @@ public class Button extends android.widget.Button {
 
     public Button(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        if (!isInEditMode())
-            PixlUIfaceManager.applyFont(this, attrs, defStyle, context);
+        PixlUIfaceManager.applyFont(this, attrs, defStyle, context);
     }
 
 
@@ -41,18 +40,20 @@ public class Button extends android.widget.Button {
 
     /**
      * Use this method to set a custom font in your code (/assets/fonts/)
+     *
      * @param ctx
      * @param font Name, don't forget to add file extension
      * @return
      */
     public boolean setCustomFont(Context ctx, String font) {
         Typeface tf = PixlUIfaceManager.getInstance(ctx).getTypeface(font);
-        if(tf != null) {
+        if (tf != null) {
             setTypeface(tf);
             return true;
         } else {
             return false;
         }
     }
+
 
 }

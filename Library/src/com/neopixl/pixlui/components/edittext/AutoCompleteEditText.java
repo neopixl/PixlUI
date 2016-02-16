@@ -129,8 +129,7 @@ public class AutoCompleteEditText extends android.widget.AutoCompleteTextView {
             setAllCaps(context, attrs);
         }
 
-        if (!isInEditMode())
-            PixlUIfaceManager.applyFont(this, attrs, defStyle, context);
+        PixlUIfaceManager.applyFont(this, attrs, defStyle, context);
     }
 
 
@@ -650,7 +649,7 @@ public class AutoCompleteEditText extends android.widget.AutoCompleteTextView {
                         if (mKeyEvent == null) {
                             listener.deleteKeyboardButton(getEdittext(), false);
                         }/* else {
-							char unicodeChar = (char) mKeyEvent
+                            char unicodeChar = (char) mKeyEvent
 									.getUnicodeChar();
 							String text = getEdittext().getText().toString();
 							text = text + unicodeChar;

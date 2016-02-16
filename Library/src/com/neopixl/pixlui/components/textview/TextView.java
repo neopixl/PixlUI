@@ -27,7 +27,6 @@ public class TextView extends android.widget.TextView {
     public TextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        if (!isInEditMode())
             PixlUIfaceManager.applyFont(this, attrs, defStyle, context);
     }
 

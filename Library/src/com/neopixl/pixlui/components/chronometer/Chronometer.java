@@ -27,7 +27,6 @@ public class Chronometer extends android.widget.Chronometer {
     public Chronometer(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        if (!isInEditMode())
             PixlUIfaceManager.applyFont(this, attrs, defStyle, context);
     }
 

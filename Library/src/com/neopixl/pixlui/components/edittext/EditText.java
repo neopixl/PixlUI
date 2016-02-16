@@ -15,13 +15,13 @@ public class EditText extends android.widget.EditText {
     }
 
     public EditText(Context context, AttributeSet attrs) {
-        this(context, attrs,android.R.attr.editTextStyle);
+        this(context, attrs, android.R.attr.editTextStyle);
     }
 
     public EditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        if (!isInEditMode())
-            PixlUIfaceManager.applyFont(this, attrs, defStyle, context);
+
+        PixlUIfaceManager.applyFont(this, attrs, defStyle, context);
     }
 
     private final PixlUIfaceManager.DrawCallback drawCallback = new PixlUIfaceManager.DrawCallback() {

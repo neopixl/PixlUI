@@ -13,6 +13,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.neopixl.pixlui.R;
@@ -35,6 +36,19 @@ public class PixlUIfaceManager {
      */
     private final Context mContext;
 
+
+    public static boolean isLayoutEditorInterfaceCompatible(View target) {
+        //Since API M, we can previsualize font in Layout Editor !
+        if (target.isInEditMode()) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 
     /**
      * Returns the singleton instance of the PixlUIfaceManager.
@@ -191,7 +205,7 @@ public class PixlUIfaceManager {
      */
     public static void applyFont(TextView target, AttributeSet attrs, int defStyle, Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CUPCAKE) {
-            if (target == null || target.isInEditMode())
+            if (target == null || !isLayoutEditorInterfaceCompatible(target))
                 return;
         } else {
 

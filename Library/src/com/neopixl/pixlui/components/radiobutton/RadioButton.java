@@ -3,12 +3,10 @@ package com.neopixl.pixlui.components.radiobutton;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 
 import com.android.export.AllCapsTransformationMethod;
-import com.neopixl.pixlui.intern.PixlUIContants;
 import com.neopixl.pixlui.intern.PixlUIfaceManager;
 
 /*
@@ -47,7 +45,7 @@ public class RadioButton extends android.widget.RadioButton {
     }
 
     public RadioButton(Context context, AttributeSet attrs) {
-        this(context, attrs,android.R.attr.radioButtonStyle);
+        this(context, attrs, android.R.attr.radioButtonStyle);
     }
 
     public RadioButton(Context context, AttributeSet attrs, int defStyle) {
@@ -57,8 +55,7 @@ public class RadioButton extends android.widget.RadioButton {
             setAllCaps(context, attrs);
         }
 
-        if (!isInEditMode())
-            PixlUIfaceManager.applyFont(this, attrs, defStyle, context);
+        PixlUIfaceManager.applyFont(this, attrs, defStyle, context);
     }
 
 

@@ -60,7 +60,6 @@ public class CheckBox extends android.widget.CheckBox {
             setAllCaps(context, attrs);
         }
 
-        if (!isInEditMode())
             PixlUIfaceManager.applyFont(this, attrs, defStyle, context);
     }
 
