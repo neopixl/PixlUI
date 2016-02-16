@@ -46,7 +46,7 @@ public class PixlUIfaceManager {
                 return false;
             }
         } else {
-            return false;
+            return true;
         }
     }
 
