@@ -90,11 +90,27 @@ Add Dependency:
 How use it ?
 ==========
 
-1 . Import [pixlui.jar](https://github.com/neopixl/PixlUI/releases "pixlui.jar") in your project.
 
-2 . Add your custom fonts in /assets/fonts/
+1. Add your custom fonts in /assets/fonts/
 
-3 . Use it in XML:
+2. Define your fonts in styles.xml
+```xml
+    <style name="AppTheme.TextGearedSlab">
+        <item name="typeface">GearedSlab.ttf</item>
+    </style>
+
+
+    <style name="AppTheme.TextGearedSlab.t1">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+
+    <style name="AppTheme.TextGearedSlab.t2">
+        <item name="android:textSize">14sp</item>
+    </style>
+```
+
+3. Use it in XML:
 
 ```xml
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -102,13 +118,13 @@ How use it ?
     xmlns:tools="http://schemas.android.com/tools" >
 
     <com.neopixl.pixlui.components.textview.TextView
+        style="@style/AppTheme.TextGearedSlab.t1"
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/hello_world"
         pixlui:copyandpaste="false"
-        pixlui:clearclipboardcontent="true"
-        pixlui:typeface="GearedSlab.ttf" />
+        pixlui:clearclipboardcontent="true"/>
 </RelativeLayout>
 ```
 
