@@ -14,17 +14,17 @@ import com.neopixl.pixlui.intern.PixlUIfaceManager;
  *
  * @author odemolliens
  */
-public class TextView extends android.widget.TextView {
+public class CheckedTextView extends android.widget.CheckedTextView {
 
-    public TextView(Context context) {
+    public CheckedTextView(Context context) {
         this(context, null);
     }
 
-    public TextView(Context context, AttributeSet attrs) {
-        this(context, attrs, android.R.attr.textViewStyle);
+    public CheckedTextView(Context context, AttributeSet attrs) {
+        this(context, attrs, android.R.attr.checkedTextViewStyle);
     }
 
-    public TextView(Context context, AttributeSet attrs, int defStyle) {
+    public CheckedTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
         if (!isInEditMode())
@@ -35,7 +35,7 @@ public class TextView extends android.widget.TextView {
         @SuppressLint("WrongCall")
         @Override
         public void onDraw(Canvas canvas) {
-            TextView.super.onDraw(canvas);
+            CheckedTextView.super.onDraw(canvas);
         }
     };
 

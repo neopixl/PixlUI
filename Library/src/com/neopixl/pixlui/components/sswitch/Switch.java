@@ -1,9 +1,11 @@
-package com.neopixl.pixlui.components.textview;
+package com.neopixl.pixlui.components.sswitch;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.util.AttributeSet;
 
 import com.neopixl.pixlui.intern.PixlUIfaceManager;
@@ -14,17 +16,18 @@ import com.neopixl.pixlui.intern.PixlUIfaceManager;
  *
  * @author odemolliens
  */
-public class TextView extends android.widget.TextView {
+@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+public class Switch extends android.widget.Switch {
 
-    public TextView(Context context) {
+    public Switch(Context context) {
         this(context, null);
     }
 
-    public TextView(Context context, AttributeSet attrs) {
-        this(context, attrs, android.R.attr.textViewStyle);
+    public Switch(Context context, AttributeSet attrs) {
+        this(context, attrs, android.R.attr.switchStyle);
     }
 
-    public TextView(Context context, AttributeSet attrs, int defStyle) {
+    public Switch(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
         if (!isInEditMode())
@@ -35,7 +38,7 @@ public class TextView extends android.widget.TextView {
         @SuppressLint("WrongCall")
         @Override
         public void onDraw(Canvas canvas) {
-            TextView.super.onDraw(canvas);
+            Switch.super.onDraw(canvas);
         }
     };
 

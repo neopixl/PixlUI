@@ -1,4 +1,4 @@
-package com.neopixl.pixlui.components.textview;
+package com.neopixl.pixlui.components.chronometer;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -14,17 +14,17 @@ import com.neopixl.pixlui.intern.PixlUIfaceManager;
  *
  * @author odemolliens
  */
-public class TextView extends android.widget.TextView {
+public class Chronometer extends android.widget.Chronometer {
 
-    public TextView(Context context) {
+    public Chronometer(Context context) {
         this(context, null);
     }
 
-    public TextView(Context context, AttributeSet attrs) {
-        this(context, attrs, android.R.attr.textViewStyle);
+    public Chronometer(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
     }
 
-    public TextView(Context context, AttributeSet attrs, int defStyle) {
+    public Chronometer(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
         if (!isInEditMode())
@@ -35,7 +35,7 @@ public class TextView extends android.widget.TextView {
         @SuppressLint("WrongCall")
         @Override
         public void onDraw(Canvas canvas) {
-            TextView.super.onDraw(canvas);
+            Chronometer.super.onDraw(canvas);
         }
     };
 

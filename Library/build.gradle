@@ -17,5 +17,15 @@ android {
 
 }
 
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        minSdkVersion 4
+        targetSdkVersion 23
+    }
+}
+
 dependencies {
 }

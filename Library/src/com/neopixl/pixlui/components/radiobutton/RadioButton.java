@@ -1,14 +1,15 @@
 package com.neopixl.pixlui.components.radiobutton;
 
-import com.android.export.AllCapsTransformationMethod;
-import com.neopixl.pixlui.components.textview.FontFactory;
-import com.neopixl.pixlui.intern.PixlUIContants;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+
+import com.android.export.AllCapsTransformationMethod;
+import com.neopixl.pixlui.intern.PixlUIContants;
+import com.neopixl.pixlui.intern.PixlUIfaceManager;
 
 /*
  Copyright 2014 Olivier Demolliens
@@ -29,140 +30,135 @@ import android.util.AttributeSet;
  */
 public class RadioButton extends android.widget.RadioButton {
 
-	/**
-	 * XML attribute
-	 */
-	private static String RADIOBUTTON_ATTRIBUTE_FONT_NAME = "typeface";
-	private static final String RADIOBUTTON_OS_ATTRIBUTE_TEXT_ALL_CAPS = "textAllCaps";
+    /**
+     * XML attribute
+     */
+    private static String RADIOBUTTON_ATTRIBUTE_FONT_NAME = "typeface";
+    private static final String RADIOBUTTON_OS_ATTRIBUTE_TEXT_ALL_CAPS = "textAllCaps";
 
-	/**
-	 * State
-	 */
-	private boolean mOldDeviceTextAllCaps;
+    /**
+     * State
+     */
+    private boolean mOldDeviceTextAllCaps;
 
-	public RadioButton(Context context) {
-		super(context);
-		radioButtonVersion();
-	}
+    public RadioButton(Context context) {
+        super(context);
+        radioButtonVersion();
+    }
 
-	public RadioButton(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		radioButtonVersion();
-		setCustomFont(context, attrs);
-		if (isOldDeviceTextAllCaps()) {
-			setAllCaps(context, attrs);
-		}
-	}
+    public RadioButton(Context context, AttributeSet attrs) {
+        this(context, attrs,android.R.attr.radioButtonStyle);
+    }
 
-	public RadioButton(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-		radioButtonVersion();
-		setCustomFont(context, attrs);
-		if (isOldDeviceTextAllCaps()) {
-			setAllCaps(context, attrs);
-		}
-	}
+    public RadioButton(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        radioButtonVersion();
+        if (isOldDeviceTextAllCaps()) {
+            setAllCaps(context, attrs);
+        }
 
-	/**
-	 * Define what version of code we need to use
-	 */
-	private void radioButtonVersion() {
-		if (android.os.Build.VERSION.SDK_INT < 14) {
-			setOldDeviceTextAllCaps(true);
-		} else {
-			setOldDeviceTextAllCaps(false);
-		}
-	}
+        if (!isInEditMode())
+            PixlUIfaceManager.applyFont(this, attrs, defStyle, context);
+    }
 
-	/**
-	 * XML methods
-	 * 
-	 * @param ctx
-	 * @param attrs
-	 */
-	private void setCustomFont(Context ctx, AttributeSet attrs) {
 
-		String typefaceName = attrs.getAttributeValue(
-				PixlUIContants.SCHEMA_URL, RADIOBUTTON_ATTRIBUTE_FONT_NAME);
+    private final PixlUIfaceManager.DrawCallback drawCallback = new PixlUIfaceManager.DrawCallback() {
+        @SuppressLint("WrongCall")
+        @Override
+        public void onDraw(Canvas canvas) {
+            RadioButton.super.onDraw(canvas);
+        }
+    };
 
-		if (typefaceName != null) {
-			setPaintFlags(this.getPaintFlags() | Paint.SUBPIXEL_TEXT_FLAG
-					| Paint.LINEAR_TEXT_FLAG);
-			setCustomFont(ctx, typefaceName);
-		}
-	}
+    @Override
+    protected void onDraw(Canvas canvas) {
+        PixlUIfaceManager.onDrawHelper(canvas, this, drawCallback);
+        super.onDraw(canvas);
+    }
 
-	/**
-	 * XML methods
-	 * 
-	 * @param ctx
-	 * @param attrs
-	 */
-	@SuppressLint("NewApi")
-	private void setAllCaps(Context ctx, AttributeSet attrs) {
+    /**
+     * Use this method to set a custom font in your code (/assets/fonts/)
+     *
+     * @param ctx
+     * @param font Name, don't forget to add file extension
+     * @return
+     */
+    public boolean setCustomFont(Context ctx, String font) {
+        Typeface tf = PixlUIfaceManager.getInstance(ctx).getTypeface(font);
+        if (tf != null) {
+            setTypeface(tf);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-		if (!isInEditMode()) {
-			int indexSize = attrs.getAttributeCount();
 
-			boolean allCaps = false;
+    /**
+     * Define what version of code we need to use
+     */
+    private void radioButtonVersion() {
+        if (android.os.Build.VERSION.SDK_INT < 14) {
+            setOldDeviceTextAllCaps(true);
+        } else {
+            setOldDeviceTextAllCaps(false);
+        }
+    }
 
-			for (int i = 0; i < indexSize; i++) {
-				if (attrs.getAttributeName(i).equals(
-						RADIOBUTTON_OS_ATTRIBUTE_TEXT_ALL_CAPS)) {
-					allCaps = attrs.getAttributeBooleanValue(i, false);
-					break;
-				}
-			}
+    /**
+     * XML methods
+     *
+     * @param ctx
+     * @param attrs
+     */
+    @SuppressLint("NewApi")
+    private void setAllCaps(Context ctx, AttributeSet attrs) {
 
-			if (allCaps) {
-				setAllCaps(allCaps);
-			}
-		}
-	}
+        if (!isInEditMode()) {
+            int indexSize = attrs.getAttributeCount();
 
-	/**
-	 * Use this method to uppercase all char in text.
-	 * 
-	 * @param allCaps
-	 */
-	@SuppressLint("NewApi")
-	public void setAllCaps(boolean allCaps) {
-		if (this.isOldDeviceTextAllCaps()) {
-			if (allCaps) {
-				setTransformationMethod(new AllCapsTransformationMethod(
-						getContext()));
-			} else {
-				setTransformationMethod(null);
-			}
-		} else {
-			super.setAllCaps(allCaps);
-		}
-	}
+            boolean allCaps = false;
 
-	/**
-	 * Use this method to set a custom font in your code (/assets/fonts/)
-	 * 
-	 * @param ctx
-	 * @param Font
-	 *            Name, don't forget to add file extension
-	 * @return
-	 */
-	public boolean setCustomFont(Context ctx, String font) {
-		Typeface tf = FontFactory.getInstance(ctx).getFont(font);
-		if (tf != null) {
-			setTypeface(tf);
-			return true;
-		} else {
-			return false;
-		}
-	}
+            for (int i = 0; i < indexSize; i++) {
+                if (attrs.getAttributeName(i).equals(
+                        RADIOBUTTON_OS_ATTRIBUTE_TEXT_ALL_CAPS)) {
+                    allCaps = attrs.getAttributeBooleanValue(i, false);
+                    break;
+                }
+            }
 
-	public boolean isOldDeviceTextAllCaps() {
-		return mOldDeviceTextAllCaps;
-	}
+            if (allCaps) {
+                setAllCaps(allCaps);
+            }
+        }
+    }
 
-	public void setOldDeviceTextAllCaps(boolean mOldDeviceTextAllCaps) {
-		this.mOldDeviceTextAllCaps = mOldDeviceTextAllCaps;
-	}
+    /**
+     * Use this method to uppercase all char in text.
+     *
+     * @param allCaps
+     */
+    @SuppressLint("NewApi")
+    public void setAllCaps(boolean allCaps) {
+        if (this.isOldDeviceTextAllCaps()) {
+            if (allCaps) {
+                setTransformationMethod(new AllCapsTransformationMethod(
+                        getContext()));
+            } else {
+                setTransformationMethod(null);
+            }
+        } else {
+            super.setAllCaps(allCaps);
+        }
+    }
+
+
+    public boolean isOldDeviceTextAllCaps() {
+        return mOldDeviceTextAllCaps;
+    }
+
+    public void setOldDeviceTextAllCaps(boolean mOldDeviceTextAllCaps) {
+        this.mOldDeviceTextAllCaps = mOldDeviceTextAllCaps;
+    }
 
 }

@@ -1,6 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:pixlui="http://schemas.android.com/apk/com.neopixl.pixlui"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -10,37 +11,70 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
-    <com.neopixl.pixlui.components.textview.TextView
+    <np.TextView
         style="@style/AppTheme.TextGearedSlab.t1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="I am a TextView with font GearedSlab" />
 
 
-    <com.neopixl.pixlui.components.textview.TextView
+    <np.CheckedTextView
         style="@style/AppTheme.TextOswaldRegular.t1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="I am a TextView with font Oswald_Regular" />
-    <!-- pixlui:typeface="Oswald_Regular.ttf"-->
 
-    <com.neopixl.pixlui.components.edittext.EditText
+    <np.Chronometer
+        style="@style/AppTheme.TextGearedSlab.t1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="I am a TextView with font GearedSlab" />
+
+
+    <np.EditText
         android:id="@+id/editText1"
+        style="@style/AppTheme.TextGearedSlab.t2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:text="@string/hello_world" />
+
+
+    <np.ExtractEditText
+        android:id="@+id/editTextZ"
         style="@style/AppTheme.TextOswaldRegular.t2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:text="@string/hello_world" />
-    <!-- pixlui:typeface="Oswald_Regular.ttf"-->
 
-    <com.neopixl.pixlui.components.button.Button
+
+    <np.Button
         android:id="@+id/button1"
+        style="@style/AppTheme.TextOswaldRegular.t2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/hello_world" />
+
+    <np.Button
+        android:id="@+id/button2"
         style="@style/AppTheme.TextGearedSlab.t2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/hello_world" />
-    <!-- pixlui:typeface="GearedSlab.ttf"-->
+
+
+    <np.CheckBox
+        android:id="@+id/checkbox"
+        style="@style/AppTheme.TextOswaldRegular.t2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/hello_world" />
+
 
 </LinearLayout>
