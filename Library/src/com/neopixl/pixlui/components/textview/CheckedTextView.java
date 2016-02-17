@@ -26,8 +26,7 @@ public class CheckedTextView extends android.widget.CheckedTextView {
 
     public CheckedTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-
-            PixlUIfaceManager.applyFont(this, attrs, defStyle, context);
+        PixlUIfaceManager.applyFont(this, attrs, defStyle, context);
     }
 
     private final PixlUIfaceManager.DrawCallback drawCallback = new PixlUIfaceManager.DrawCallback() {
@@ -45,16 +44,16 @@ public class CheckedTextView extends android.widget.CheckedTextView {
     }
 
 
-
     /**
      * Use this method to set a custom font in your code (/assets/fonts/)
+     *
      * @param ctx
      * @param font Name, don't forget to add file extension
      * @return
      */
     public boolean setCustomFont(Context ctx, String font) {
         Typeface tf = PixlUIfaceManager.getInstance(ctx).getTypeface(font);
-        if(tf != null) {
+        if (tf != null) {
             setTypeface(tf);
             return true;
         } else {

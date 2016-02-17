@@ -204,6 +204,7 @@ public class PixlUIfaceManager {
      *                 from the current theme, or an explicit style resource.
      */
     public static void applyFont(TextView target, AttributeSet attrs, int defStyle, Context context) {
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CUPCAKE) {
             if (target == null || !isLayoutEditorInterfaceCompatible(target))
                 return;
@@ -243,7 +244,6 @@ public class PixlUIfaceManager {
             getInstance(context).setTypeface(target, data.font, data.style);
         }
 
-        a.recycle();
     }
 
     /**

@@ -197,10 +197,18 @@ How use it ?
 ![MeeTincS](https://lh5.ggpht.com/WQcf8Msp7dFfpyAQNvYV_WNaA9GdR9G7-gLRrFwMgPuDTwKaU72YdTMwXXSxNkdvjA=w100)
 ![Wort.lu](https://lh4.ggpht.com/8d3m3aWSKpP6bqZefw5oF256Sgk9X_vxxh4VQ9LXqgvCz6HuyOYsQu4VmAXuDF4deZQ=w100)
 ![hb store](https://lh3.ggpht.com/UP36oSco0gsi_jXI56sQw8vSWip5IyaFwUCrfBnxaXNbpF1WfydB6jmYNYU5DY5egg=w100)
+![iBeezi](https://lh3.googleusercontent.com/mbcfJKcKu0tq9Fy-iCeBABWabutv2LYwpwjWXmBPgj51zEqdvsEOsw-mnBsf1MEn8-s=w100)
+![RootCoinExplorer](https://lh3.googleusercontent.com/RYfMwitMVHqkzZyPvN0d9yL4WdUIHRaIHNuKV_eMcU1jLKzM7BwsKpUBN33KbkmQejsf=w100)
 
 [Flow] (https://play.google.com/store/apps/details?id=com.metalab.flow)		-
 [W-Zup](https://play.google.com/store/apps/details?id=com.wzup.wzup)  	-       [FLASHiZ](https://play.google.com/store/apps/details?id=com.mobey.android)      -       [MeeTincS](https://play.google.com/store/apps/details?id=com.neopixl.apppixl.meetincs)      -       [Wort.lu](https://play.google.com/store/apps/details?id=lu.wort.main)     -   
-[Hypebeast](https://play.google.com/store/apps/details?id=com.hypebeast.store&hl=en)     -   
+[Hypebeast](https://play.google.com/store/apps/details?id=com.hypebeast.store&hl=en)     -       [iBeezi](https://play.google.com/store/apps/details?id=com.ibeezi.ibeezikbd)-       [RootCoinExplorer](https://play.google.com/store/apps/details?id=com.oslab.rootexplorer)      
+
+
+Donation
+==========
+[![Donation](https://blockchain.info/Resources/buttons/donate_64.png)](https://blockchain.info/address/1Pix1UimWDsUPBKPLoXTAdb8Vpf8Dsk1pV)
+
 
 Copyright
 ==========
