@@ -8,7 +8,7 @@ Provide few methods for visual elements.
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-PixlUI-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/166)
 [![JitPackGradle](https://img.shields.io/github/tag/neopixl/PixlUI.svg?label=maven)](https://jitpack.io/#neopixl/PixlUI/)
 [![JitPackMaven](https://img.shields.io/github/tag/neopixl/PixlUI.svg?label=gradle)](https://jitpack.io/#neopixl/PixlUI/)
-
+[![Travis](https://travis-ci.org/neopixl/PixlUI.svg?branch=master)](https://github.com/neopixl/PixlUI)
 
 CheckBox:
 - Custom font
