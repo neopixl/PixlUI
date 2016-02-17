@@ -3,7 +3,7 @@
 
 Provide few methods for visual elements.
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/odemolliens/jsdot/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/neopixl/PixlUI/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 [![Gittip](http://img.shields.io/gittip/odemolliens.svg)](https://gratipay.com/~odemolliens/)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-PixlUI-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/166)
 [![JitPackGradle](https://img.shields.io/github/tag/neopixl/PixlUI.svg?label=maven)](https://jitpack.io/#neopixl/PixlUI/)
