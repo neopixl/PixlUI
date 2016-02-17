@@ -134,7 +134,7 @@ How use it ?
 **1.1**
 
 - Android studio 1.5.1 Support
-- Android Layout Preview support
+- Android Layout Preview support (on API >=23 preview)
 - *CheckedTextView* added
 - *Chronometer* added
 - *ExtractEditText* added
