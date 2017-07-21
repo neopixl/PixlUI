@@ -72,7 +72,7 @@ public class PixlUIfaceManager {
      * they exist.
      */
     private PixlUIfaceManager(Context context) {
-        mContext = context;
+        mContext = context.getApplicationContext();
     }
 
     /**
