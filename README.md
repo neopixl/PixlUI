@@ -134,6 +134,11 @@ How use it ?
 ![Logo](https://raw.github.com/neopixl/PixlUI/master/Sample/res/drawable-xhdpi/small.png ) ChangeLog
 ===
 
+**1.1.1**
+
+- closes #31 (Memory Leak: Activity Leak on PixlUIfaceManager.INSTANCE)
+- Update buildTools (25.0.3) and compileSdkVersion / targetSdkVersion = 25.
+
 **1.1**
 
 - Android studio 1.5.1 Support
